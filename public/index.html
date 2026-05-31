@@ -11,12 +11,10 @@
   <body data-page="home">
     <header class="site-header">
       <a class="brand" href="/" aria-label="MLYNfit strona glowna">
-        <span class="brand-main">MLYN<span>fit</span></span>
-        <span class="brand-sub">Zakrec sie na fit!</span>
+        <img src="/assets/logo-mlynfit.png" alt="MLYNfit - Zakrec sie na fit!">
       </a>
       <button class="nav-toggle" type="button" data-nav-toggle aria-label="Menu">Menu</button>
       <nav class="site-nav" data-nav>
-        <a href="/">Strona glowna</a>
         <a href="/#o-nas">O nas</a>
         <a href="/#oferta">Oferta</a>
         <a href="/#cennik">Cennik</a>
@@ -29,33 +27,79 @@
 
     <main>
       <section class="hero hero-home">
+        <picture class="hero-media" aria-hidden="true">
+          <source media="(max-width: 900px)" srcset="/assets/mlynfit_hero_mobile.webp">
+          <img src="/assets/mlynfit_hero_desktop.webp" alt="Zdjecie klubu MLYNfit" loading="lazy">
+        </picture>
         <div class="hero-inner">
-          <p class="eyebrow">Klub fitness pod Lublinem</p>
-          <h1>Trenuj prosto, regularnie i bez napinki.</h1>
-          <p class="hero-copy">Kameralna silownia, zajecia grupowe i pomoc trenerow w miejscu, do ktorego latwo wracac.</p>
+          <h1>Trenuj w klubie fitness z charakterem</h1>
+          <p class="hero-copy">w zabytkowym młynie pod Lublinem</p>
           <div class="hero-actions">
-            <a class="button primary" href="/#kontakt">Umow trening probny</a>
-            <a class="button ghost" href="/terminarz/">Zobacz grafik</a>
+            <a class="button primary" href="/#kontakt">
+              Umow trening probny
+              <svg class="btn-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+            <a class="button ghost" href="/terminarz/">
+              Zobacz grafik
+              <img src="/assets/icon-calendar.svg" alt="" aria-hidden="true">
+            </a>
           </div>
+        </div>
+        <div class="hero-board" aria-label="Najwazniejsze informacje o klubie">
+          <div class="hero-board-top">
+            <span>Dzisiaj</span>
+            <strong>Grafik online</strong>
+          </div>
+          <div class="hero-board-line">
+            <span>18:30</span>
+            <strong>HIIT</strong>
+          </div>
+          <div class="hero-board-line">
+            <span>19:30</span>
+            <strong>Stretching</strong>
+          </div>
+          <a href="/terminarz/">Pelny terminarz</a>
         </div>
       </section>
 
       <section class="quick-strip" aria-label="Najwazniejsze informacje">
-        <div>
-          <strong>400 m2</strong>
-          <span>przestrzeni treningowej</span>
+        <div class="info-item">
+          <img src="/assets/icon-dumbbell.svg" alt="powierzchnia" aria-hidden="true">
+          <div>
+            <strong>400 m²</strong>
+            <span>powierzchni treningowej</span>
+          </div>
         </div>
-        <div>
-          <strong>Zajecia grupowe</strong>
-          <span>dla roznych poziomow</span>
+        <div class="info-item">
+          <img src="/assets/icon-group.svg" alt="zajecia grupowe" aria-hidden="true">
+          <div>
+            <strong>Zajęcia grupowe</strong>
+            <span>dla każdego</span>
+          </div>
         </div>
-        <div>
-          <strong>Garbów</strong>
-          <span>okolo 10 min od Lublina</span>
+        <div class="info-item">
+          <img src="/assets/icon-parking.svg" alt="parking" aria-hidden="true">
+          <div>
+            <strong>Darmowy parking</strong>
+            <span>dla klubowiczów</span>
+          </div>
         </div>
-        <div>
-          <strong>Grafik online</strong>
-          <span>aktualizowany z JSON</span>
+        <div class="info-item">
+          <img src="/assets/icon-location.svg" alt="lokalizacja" aria-hidden="true">
+          <div>
+            <strong>Świetna lokalizacja</strong>
+            <span>10 min od Lublina</span>
+          </div>
+        </div>
+        <div class="info-item">
+          <img src="/assets/icon-calendar.svg" alt="grafik" aria-hidden="true">
+          <div>
+            <strong>Grafik zajęć</strong>
+            <span>aktualizowany na bieżąco</span>
+          </div>
         </div>
       </section>
 
@@ -69,11 +113,16 @@
       </section>
 
       <section class="section split" id="o-nas">
-        <div class="media-placeholder" role="img" aria-label="Miejsce na zdjecie klubu"></div>
+        <div class="media-placeholder" role="img" aria-label="Miejsce na zdjecie klubu">
+          <picture>
+            <source media="(max-width: 900px)" srcset="/assets/mlynfit_silownia_mobile.webp">
+            <img src="/assets/mlynfit_silownia_desktop.webp" alt="Wnetrze MLYNfit - silownia" loading="lazy">
+          </picture>
+        </div>
         <div>
           <p class="eyebrow">O nas</p>
-          <h2>Mniej tekstu, wiecej konkretu.</h2>
-          <p>MLYNfit to lokalny klub dla osob, ktore chca trenowac regularnie: na silowni, na zajeciach albo z trenerem. Na stronie zostawiamy tylko informacje, ktore realnie pomagaja podjac decyzje.</p>
+          <h2>Kameralny klub w odrestaurowanym młynie w Garbowie</h2>
+          <p>W sąsiedztwie trasy Lublin–Warszawa i pałacowego zespołu, w odrestaurowanym młynie mieści się MŁYNfit. Trzypoziomowy klub (400 m²; 100 m² sala) z nowoczesnym sprzętem i trenerami pełnymi pasji. Zapraszamy — pierwszy trening gratis.</p>
           <ul class="check-list">
             <li>silownia i zajecia grupowe</li>
             <li>pierwszy trening probny</li>
@@ -85,18 +134,21 @@
       <section class="section" id="oferta">
         <div class="section-head">
           <p class="eyebrow">Oferta</p>
-          <h2>Najprostszy wybor</h2>
+          <h2>Wybierz, jak chcesz trenowac</h2>
         </div>
         <div class="feature-grid">
           <article>
+            <span class="card-kicker">01</span>
             <h3>Silownia</h3>
             <p>Trening indywidualny, bez koniecznosci umawiania sie na konkretna godzine.</p>
           </article>
           <article>
+            <span class="card-kicker">02</span>
             <h3>Zajecia grupowe</h3>
             <p>Pilates, wzmacnianie, spalanie, stretching i inne zajecia zgodnie z grafikiem.</p>
           </article>
           <article>
+            <span class="card-kicker">03</span>
             <h3>Trening probny</h3>
             <p>Krotka sciezka kontaktu dla nowych osob, bez formularzy z wieloma polami.</p>
           </article>
@@ -106,7 +158,7 @@
       <section class="section dark" id="cennik">
         <div class="section-head centered">
           <p class="eyebrow">Cennik</p>
-          <h2>Pakiety z lokalnego JSON</h2>
+          <h2>Dopasowany do Ciebie</h2>
         </div>
         <div class="pricing-grid" data-pricing></div>
       </section>
@@ -115,7 +167,7 @@
         <div>
           <p class="eyebrow">Poradnik</p>
           <h2>Pierwsza wizyta bez stresu</h2>
-          <p>Krotka sekcja na landing page wystarczy. Zamiast osobnej podstrony: trzy najwazniejsze informacje dla nowych klubowiczow.</p>
+          <p>Trzy najwazniejsze informacje dla nowych klubowiczow. Bez osobnej podstrony i bez dlugiego regulaminowego tonu.</p>
         </div>
         <div class="tips-grid">
           <article>
@@ -133,13 +185,17 @@
         </div>
       </section>
 
-      <section class="section contact-band" id="kontakt">
-        <div>
+      <section class="section contact-section" id="kontakt">
+        <div class="contact-copy">
           <p class="eyebrow">Kontakt</p>
           <h2>Umow trening probny</h2>
           <p>Dane kontaktowe sa wspolne dla calej strony i docelowo moga pochodzic z `site.json`.</p>
+          <address data-contact></address>
+          <a class="map-link" href="https://www.google.com/maps/search/?api=1&query=ul.%20Mlynska%201A%2C%2021-080%20Garbow" target="_blank" rel="noopener">Otworz w mapach</a>
         </div>
-        <address data-contact></address>
+        <div class="map-card">
+          <img src="/assets/static-map.svg" alt="Statyczna mapa dojazdu do MLYNfit w Garbowie" loading="lazy">
+        </div>
       </section>
     </main>
 

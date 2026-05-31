@@ -54,13 +54,25 @@
       return item.dzien === dayName;
     }).slice(0, 4);
 
+    // If no items for today, render placeholder cards (keeps layout matching the example)
     if (!todaysItems.length) {
-      todaysItems = items.slice(0, 4);
+      todaysItems = (items && items.slice && items.slice(0, 4)) || [];
+    }
+
+    if (!todaysItems.length) {
+      todaysItems = [
+        { godzina: '17:00', nazwa: 'PILATES', trener: 'Kasia', placeholder: true },
+        { godzina: '18:00', nazwa: 'STRONG NATION', trener: 'Ania', placeholder: true },
+        { godzina: '19:00', nazwa: 'ZDROWY KRĘGOSŁUP', trener: 'Kasia', placeholder: true },
+        { godzina: '20:00', nazwa: 'TABATA', trener: 'Michał', placeholder: true }
+      ];
     }
 
     node.innerHTML = todaysItems.map(function (item) {
+      var classes = ['class-card'];
+      if (item.placeholder) classes.push('placeholder');
       return [
-        '<article class="class-card">',
+        '<article class="' + classes.join(' ') + '">',
         '<span class="time">' + item.godzina + '</span>',
         '<h3>' + item.nazwa + '</h3>',
         '<span class="trainer">' + (item.trener || "") + '</span>',
@@ -149,6 +161,10 @@
       })
       .catch(function (error) {
         console.warn(error.message);
+        // Render placeholders if schedule cannot be loaded
+        try {
+          renderTodayClasses([]);
+        } catch (e) { /* ignore */ }
       });
 
     fetchJson(DATA_PATHS.pricing)
