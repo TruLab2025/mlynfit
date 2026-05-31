@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MLYNfit - klub fitness w Garbowie</title>
+    <meta name="description" content="MLYNfit - trening, zajecia grupowe i kameralny klub fitness w zabytkowym mlynie pod Lublinem.">
+    <link rel="stylesheet" href="/style.css">
+    <script src="/app.js" defer></script>
+  </head>
+  <body data-page="home">
+    <header class="site-header">
+      <a class="brand" href="/" aria-label="MLYNfit strona glowna">
+        <span class="brand-main">MLYN<span>fit</span></span>
+        <span class="brand-sub">Zakrec sie na fit!</span>
+      </a>
+      <button class="nav-toggle" type="button" data-nav-toggle aria-label="Menu">Menu</button>
+      <nav class="site-nav" data-nav>
+        <a href="/">Strona glowna</a>
+        <a href="/#o-nas">O nas</a>
+        <a href="/#oferta">Oferta</a>
+        <a href="/#cennik">Cennik</a>
+        <a href="/terminarz/">Grafik zajec</a>
+        <a href="/dla-firm/">Dla firm</a>
+        <a href="/#kontakt">Kontakt</a>
+      </nav>
+      <a class="header-cta" href="/#kontakt">Umow trening probny</a>
+    </header>
+
+    <main>
+      <section class="hero hero-home">
+        <div class="hero-inner">
+          <p class="eyebrow">Klub fitness pod Lublinem</p>
+          <h1>Trenuj prosto, regularnie i bez napinki.</h1>
+          <p class="hero-copy">Kameralna silownia, zajecia grupowe i pomoc trenerow w miejscu, do ktorego latwo wracac.</p>
+          <div class="hero-actions">
+            <a class="button primary" href="/#kontakt">Umow trening probny</a>
+            <a class="button ghost" href="/terminarz/">Zobacz grafik</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="quick-strip" aria-label="Najwazniejsze informacje">
+        <div>
+          <strong>400 m2</strong>
+          <span>przestrzeni treningowej</span>
+        </div>
+        <div>
+          <strong>Zajecia grupowe</strong>
+          <span>dla roznych poziomow</span>
+        </div>
+        <div>
+          <strong>Garbów</strong>
+          <span>okolo 10 min od Lublina</span>
+        </div>
+        <div>
+          <strong>Grafik online</strong>
+          <span>aktualizowany z JSON</span>
+        </div>
+      </section>
+
+      <section class="section dark" id="dzisiaj">
+        <div class="section-head">
+          <p class="eyebrow">Dzisiejsze zajecia</p>
+          <h2>Sprawdz, co dzisiaj trenujemy</h2>
+          <a href="/terminarz/">Zobacz caly grafik</a>
+        </div>
+        <div class="class-cards" data-today-classes></div>
+      </section>
+
+      <section class="section split" id="o-nas">
+        <div class="media-placeholder" role="img" aria-label="Miejsce na zdjecie klubu"></div>
+        <div>
+          <p class="eyebrow">O nas</p>
+          <h2>Mniej tekstu, wiecej konkretu.</h2>
+          <p>MLYNfit to lokalny klub dla osob, ktore chca trenowac regularnie: na silowni, na zajeciach albo z trenerem. Na stronie zostawiamy tylko informacje, ktore realnie pomagaja podjac decyzje.</p>
+          <ul class="check-list">
+            <li>silownia i zajecia grupowe</li>
+            <li>pierwszy trening probny</li>
+            <li>czytelny grafik na osobnej stronie</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="section" id="oferta">
+        <div class="section-head">
+          <p class="eyebrow">Oferta</p>
+          <h2>Najprostszy wybor</h2>
+        </div>
+        <div class="feature-grid">
+          <article>
+            <h3>Silownia</h3>
+            <p>Trening indywidualny, bez koniecznosci umawiania sie na konkretna godzine.</p>
+          </article>
+          <article>
+            <h3>Zajecia grupowe</h3>
+            <p>Pilates, wzmacnianie, spalanie, stretching i inne zajecia zgodnie z grafikiem.</p>
+          </article>
+          <article>
+            <h3>Trening probny</h3>
+            <p>Krotka sciezka kontaktu dla nowych osob, bez formularzy z wieloma polami.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section dark" id="cennik">
+        <div class="section-head centered">
+          <p class="eyebrow">Cennik</p>
+          <h2>Pakiety z lokalnego JSON</h2>
+        </div>
+        <div class="pricing-grid" data-pricing></div>
+      </section>
+
+      <section class="section split" id="poradnik">
+        <div>
+          <p class="eyebrow">Poradnik</p>
+          <h2>Pierwsza wizyta bez stresu</h2>
+          <p>Krotka sekcja na landing page wystarczy. Zamiast osobnej podstrony: trzy najwazniejsze informacje dla nowych klubowiczow.</p>
+        </div>
+        <div class="tips-grid">
+          <article>
+            <h3>Wez obuwie</h3>
+            <p>Wygodne buty na zmiane i recznik treningowy.</p>
+          </article>
+          <article>
+            <h3>Podejdz do recepcji</h3>
+            <p>Pomozemy wybrac karnet i pokazemy klub.</p>
+          </article>
+          <article>
+            <h3>Dbaj o sprzet</h3>
+            <p>Odkładaj akcesoria i dezynfekuj stanowisko po treningu.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section contact-band" id="kontakt">
+        <div>
+          <p class="eyebrow">Kontakt</p>
+          <h2>Umow trening probny</h2>
+          <p>Dane kontaktowe sa wspolne dla calej strony i docelowo moga pochodzic z `site.json`.</p>
+        </div>
+        <address data-contact></address>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <span>© MLYNfit</span>
+      <a href="/terminarz/">Grafik zajec</a>
+      <a href="/dla-firm/">Dla firm</a>
+    </footer>
+  </body>
+</html>

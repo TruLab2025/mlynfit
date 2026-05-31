@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Grafik zajec - MLYNfit</title>
+    <meta name="description" content="Aktualny grafik zajec MLYNfit.">
+    <link rel="stylesheet" href="/style.css">
+    <script src="/app.js" defer></script>
+  </head>
+  <body data-page="schedule">
+    <header class="site-header">
+      <a class="brand" href="/">
+        <span class="brand-main">MLYN<span>fit</span></span>
+        <span class="brand-sub">Zakrec sie na fit!</span>
+      </a>
+      <button class="nav-toggle" type="button" data-nav-toggle aria-label="Menu">Menu</button>
+      <nav class="site-nav" data-nav>
+        <a href="/">Strona glowna</a>
+        <a href="/#o-nas">O nas</a>
+        <a href="/#oferta">Oferta</a>
+        <a href="/#cennik">Cennik</a>
+        <a href="/terminarz/">Grafik zajec</a>
+        <a href="/dla-firm/">Dla firm</a>
+        <a href="/#kontakt">Kontakt</a>
+      </nav>
+      <a class="header-cta" href="/#kontakt">Umow trening probny</a>
+    </header>
+
+    <main>
+      <section class="page-hero">
+        <p class="eyebrow">Grafik zajec</p>
+        <h1>Terminarz na osobnej stronie</h1>
+        <p>Ta podstrona renderuje dane z `/data/grafik.json`. Docelowo plik bedzie generowany z Google Sheets.</p>
+      </section>
+
+      <section class="section">
+        <div class="notice" data-messages></div>
+        <div class="schedule-board" data-schedule></div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <span>© MLYNfit</span>
+      <a href="/">Strona glowna</a>
+      <a href="/dla-firm/">Dla firm</a>
+    </footer>
+  </body>
+</html>

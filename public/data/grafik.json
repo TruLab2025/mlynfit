@@ -1,0 +1,54 @@
+{
+  "updatedAt": "2026-05-31T12:00:00+02:00",
+  "items": [
+    {
+      "dzien": "Poniedzialek",
+      "godzina": "9:00",
+      "nazwa": "Pilates - Wzmacnianie",
+      "trener": "Zosia",
+      "aktywne": true
+    },
+    {
+      "dzien": "Poniedzialek",
+      "godzina": "18:30",
+      "nazwa": "Spalanie",
+      "trener": "Agnieszka",
+      "aktywne": true
+    },
+    {
+      "dzien": "Wtorek",
+      "godzina": "18:00",
+      "nazwa": "Salsation",
+      "trener": "Patrycja",
+      "aktywne": true
+    },
+    {
+      "dzien": "Wtorek",
+      "godzina": "20:00",
+      "nazwa": "Body Pump",
+      "trener": "Karolina",
+      "aktywne": true
+    },
+    {
+      "dzien": "Sroda",
+      "godzina": "19:00",
+      "nazwa": "Figura",
+      "trener": "Zosia",
+      "aktywne": true
+    },
+    {
+      "dzien": "Czwartek",
+      "godzina": "18:30",
+      "nazwa": "HIIT",
+      "trener": "Ula",
+      "aktywne": true
+    },
+    {
+      "dzien": "Piatek",
+      "godzina": "19:30",
+      "nazwa": "Ksztaltowanie sylwetki",
+      "trener": "Zosia",
+      "aktywne": true
+    }
+  ]
+}

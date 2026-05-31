@@ -1,0 +1,21 @@
+Options -Indexes
+
+<IfModule mod_headers.c>
+  <FilesMatch "\.(html)$">
+    Header set Cache-Control "public, max-age=300"
+  </FilesMatch>
+
+  <FilesMatch "\.(json)$">
+    Header set Cache-Control "public, max-age=300"
+  </FilesMatch>
+
+  <FilesMatch "\.(css|js|png|jpg|jpeg|webp|svg)$">
+    Header set Cache-Control "public, max-age=2592000"
+  </FilesMatch>
+</IfModule>
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteRule ^grafik-zajec/?$ /terminarz/ [R=301,L]
+  RewriteRule ^137-2/?$ /regulamin/ [R=301,L]
+</IfModule>

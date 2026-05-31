@@ -1,0 +1,11 @@
+{
+  "nazwa": "MLYNfit",
+  "telefon": "798 090 686",
+  "email": "kontakt@mlynfit.pl",
+  "adres": {
+    "ulica": "ul. Mlynska 1A",
+    "kod": "21-080",
+    "miasto": "Garbow"
+  },
+  "godziny": "pn-pt 8-22, sb 9-18, nd 9-16"
+}
