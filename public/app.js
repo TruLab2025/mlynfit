@@ -44,6 +44,29 @@
     });
   }
 
+  var TILE_MAP = {
+    'pilates':      '/assets/pilates_tile_600x400.webp',
+    'wzmacnianie':  '/assets/pilates_tile_600x400.webp',
+    'hiit':         '/assets/hiit_tile_600x400.webp',
+    'spalanie':     '/assets/hiit_tile_600x400.webp',
+    'tabata':       '/assets/hiit_tile_600x400.webp',
+    'body pump':    '/assets/bodypump_tile_600x400.webp',
+    'figura':       '/assets/bodypump_tile_600x400.webp',
+    'kształtowanie': '/assets/bodypump_tile_600x400.webp',
+    'kregoslup':    '/assets/kregoslup_tile_600x400.webp',
+    'kręgosłup':    '/assets/kregoslup_tile_600x400.webp',
+    'salsation':    '/assets/pilates_tile_600x400.webp',
+    'stretching':   '/assets/kregoslup_tile_600x400.webp'
+  };
+
+  function getTile(nazwa) {
+    var key = (nazwa || '').toLowerCase();
+    for (var k in TILE_MAP) {
+      if (key.indexOf(k) !== -1) return TILE_MAP[k];
+    }
+    return null;
+  }
+
   function renderTodayClasses(items) {
     var node = qs("[data-today-classes]");
     if (!node) return;
@@ -54,31 +77,34 @@
       return item.dzien === dayName;
     }).slice(0, 4);
 
-    // If no items for today, render placeholder cards (keeps layout matching the example)
     if (!todaysItems.length) {
       todaysItems = (items && items.slice && items.slice(0, 4)) || [];
     }
 
     if (!todaysItems.length) {
       todaysItems = [
-        { godzina: '17:00', nazwa: 'PILATES', trener: 'Kasia', placeholder: true },
-        { godzina: '18:00', nazwa: 'STRONG NATION', trener: 'Ania', placeholder: true },
-        { godzina: '19:00', nazwa: 'ZDROWY KRĘGOSŁUP', trener: 'Kasia', placeholder: true },
-        { godzina: '20:00', nazwa: 'TABATA', trener: 'Michał', placeholder: true }
+        { godzina: '17:00', nazwa: 'Pilates', trener: 'Kasia' },
+        { godzina: '18:00', nazwa: 'HIIT', trener: 'Ania' },
+        { godzina: '19:00', nazwa: 'Zdrowy Kręgosłup', trener: 'Kasia' },
+        { godzina: '20:00', nazwa: 'Body Pump', trener: 'Michał' }
       ];
     }
 
     node.innerHTML = todaysItems.map(function (item) {
-      var classes = ['class-card'];
-      if (item.placeholder) classes.push('placeholder');
+      var tile = getTile(item.nazwa);
+      var imgHtml = tile
+        ? '<div class="class-card-img"><img src="' + tile + '" alt="' + item.nazwa + '" loading="lazy"></div>'
+        : '';
       return [
-        '<article class="' + classes.join(' ') + '">',
+        '<article class="class-card">',
+        imgHtml,
+        '<div class="class-card-body">',
         '<span class="time">' + item.godzina + '</span>',
         '<h3>' + item.nazwa + '</h3>',
-        '<span class="trainer">' + (item.trener || "") + '</span>',
+        '</div>',
         '</article>'
-      ].join("");
-    }).join("");
+      ].join('');
+    }).join('');
   }
 
   function renderSchedule(items) {
@@ -150,8 +176,25 @@
     });
   }
 
+  function initReveal() {
+    if (!window.IntersectionObserver) return;
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    qsa('.reveal').forEach(function (el) {
+      observer.observe(el);
+    });
+  }
+
   function init() {
     initNav();
+    initReveal();
 
     fetchJson(DATA_PATHS.schedule)
       .then(activeItems)

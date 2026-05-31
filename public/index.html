@@ -3,8 +3,11 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>MLYNfit - klub fitness w Garbowie</title>
-    <meta name="description" content="MLYNfit - trening, zajecia grupowe i kameralny klub fitness w zabytkowym mlynie pod Lublinem.">
+    <title>MLYNfit — Klub Fitness w Garbowie</title>
+    <meta name="description" content="MLYNfit — kameralny klub fitness w zabytkowym młynie pod Lublinem. Siłownia, zajęcia grupowe, trening próbny gratis. 10 min od Lublina.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/style.css">
     <script src="/app.js" defer></script>
   </head>
@@ -29,10 +32,10 @@
       <section class="hero hero-home">
         <picture class="hero-media" aria-hidden="true">
           <source media="(max-width: 900px)" srcset="/assets/mlynfit_hero_mobile.webp">
-          <img src="/assets/mlynfit_hero_desktop.webp" alt="Zdjecie klubu MLYNfit" loading="lazy">
+          <img src="/assets/mlynfit_hero_desktop.webp" alt="Klub MLYNfit" loading="lazy">
         </picture>
         <div class="hero-inner">
-          <h1>Trenuj w klubie fitness z charakterem</h1>
+          <h1>Trenuj w klubie fitness<br>z <em>charakterem</em></h1>
           <p class="hero-copy">w zabytkowym młynie pod Lublinem</p>
           <div class="hero-actions">
             <a class="button primary" href="/#kontakt">
@@ -47,21 +50,6 @@
               <img src="/assets/icon-calendar.svg" alt="" aria-hidden="true">
             </a>
           </div>
-        </div>
-        <div class="hero-board" aria-label="Najwazniejsze informacje o klubie">
-          <div class="hero-board-top">
-            <span>Dzisiaj</span>
-            <strong>Grafik online</strong>
-          </div>
-          <div class="hero-board-line">
-            <span>18:30</span>
-            <strong>HIIT</strong>
-          </div>
-          <div class="hero-board-line">
-            <span>19:30</span>
-            <strong>Stretching</strong>
-          </div>
-          <a href="/terminarz/">Pelny terminarz</a>
         </div>
       </section>
 
@@ -104,59 +92,82 @@
       </section>
 
       <section class="section dark" id="dzisiaj">
-        <div class="section-head">
-          <p class="eyebrow">Dzisiejsze zajecia</p>
-          <h2>Sprawdz, co dzisiaj trenujemy</h2>
-          <a href="/terminarz/">Zobacz caly grafik</a>
+        <div class="section-head reveal">
+          <div>
+            <p class="eyebrow">Nasze zajęcia</p>
+            <h2>Sprawdź, co trenujemy</h2>
+          </div>
+          <a href="/terminarz/">Zobacz cały grafik →</a>
         </div>
-        <div class="class-cards" data-today-classes></div>
+        <div class="class-cards">
+          <article class="class-card">
+            <img src="/assets/pilates_tile_600x400.webp" alt="Pilates" loading="lazy">
+            <div class="class-card-label"><h3>Pilates</h3></div>
+          </article>
+          <article class="class-card">
+            <img src="/assets/hiit_tile_600x400.webp" alt="HIIT" loading="lazy">
+            <div class="class-card-label"><h3>HIIT</h3></div>
+          </article>
+          <article class="class-card">
+            <img src="/assets/bodypump_tile_600x400.webp" alt="Body Pump" loading="lazy">
+            <div class="class-card-label"><h3>Body Pump</h3></div>
+          </article>
+          <article class="class-card">
+            <img src="/assets/kregoslup_tile_600x400.webp" alt="Zdrowy kręgosłup" loading="lazy">
+            <div class="class-card-label"><h3>Zdrowy kręgosłup</h3></div>
+          </article>
+        </div>
       </section>
 
       <section class="section split" id="o-nas">
-        <div class="media-placeholder" role="img" aria-label="Miejsce na zdjecie klubu">
-          <picture>
+        <div class="media-placeholder reveal" role="img" aria-label="Wnetrze klubu MLYNfit">
+          <picture class="media-fill">
             <source media="(max-width: 900px)" srcset="/assets/mlynfit_silownia_mobile.webp">
             <img src="/assets/mlynfit_silownia_desktop.webp" alt="Wnetrze MLYNfit - silownia" loading="lazy">
           </picture>
         </div>
-        <div>
+        <div class="reveal">
           <p class="eyebrow">O nas</p>
-          <h2>Kameralny klub w odrestaurowanym młynie w Garbowie</h2>
-          <p>W sąsiedztwie trasy Lublin–Warszawa i pałacowego zespołu, w odrestaurowanym młynie mieści się MŁYNfit. Trzypoziomowy klub (400 m²; 100 m² sala) z nowoczesnym sprzętem i trenerami pełnymi pasji. Zapraszamy — pierwszy trening gratis.</p>
+          <h2>Dawny młyn. Dziś miejsce stworzone dla ludzi aktywnych.</h2>
+          <p>W zabytkowych murach odrestaurowanego młyna w Garbowie powstał MŁYNfit – klub fitness łączący wyjątkową architekturę, nowoczesną przestrzeń treningową i kameralną atmosferę.</p>
+          <p>Ponad 400 m², różnorodne zajęcia grupowe, profesjonalni instruktorzy i miejsce, do którego chce się wracać.</p>
+          <p>Tutaj dbasz nie tylko o formę, ale również o dobre samopoczucie.</p>
           <ul class="check-list">
-            <li>silownia i zajecia grupowe</li>
-            <li>pierwszy trening probny</li>
-            <li>czytelny grafik na osobnej stronie</li>
+            <li>Siłownia i zajęcia grupowe</li>
+            <li>Pierwszy trening próbny gratis</li>
+            <li>Czytelny grafik online</li>
           </ul>
         </div>
       </section>
 
       <section class="section" id="oferta">
-        <div class="section-head">
-          <p class="eyebrow">Oferta</p>
-          <h2>Wybierz, jak chcesz trenowac</h2>
+        <div class="section-head reveal">
+          <div>
+            <p class="eyebrow">Oferta</p>
+            <h2>Wybierz, jak chcesz trenować</h2>
+          </div>
         </div>
         <div class="feature-grid">
-          <article>
+          <article class="reveal">
             <span class="card-kicker">01</span>
-            <h3>Silownia</h3>
-            <p>Trening indywidualny, bez koniecznosci umawiania sie na konkretna godzine.</p>
+            <h3>Siłownia</h3>
+            <p>Trening indywidualny, bez konieczności umawiania się na konkretną godzinę.</p>
           </article>
-          <article>
+          <article class="reveal">
             <span class="card-kicker">02</span>
-            <h3>Zajecia grupowe</h3>
-            <p>Pilates, wzmacnianie, spalanie, stretching i inne zajecia zgodnie z grafikiem.</p>
+            <h3>Zajęcia grupowe</h3>
+            <p>Pilates, wzmacnianie, spalanie, stretching i inne zajęcia zgodnie z grafikiem.</p>
           </article>
-          <article>
+          <article class="reveal">
             <span class="card-kicker">03</span>
-            <h3>Trening probny</h3>
-            <p>Krotka sciezka kontaktu dla nowych osob, bez formularzy z wieloma polami.</p>
+            <h3>Trening próbny</h3>
+            <p>Krótka ścieżka kontaktu dla nowych osób — bez długich formularzy i czekania.</p>
           </article>
         </div>
       </section>
 
       <section class="section dark" id="cennik">
-        <div class="section-head centered">
+        <div class="section-head centered reveal">
           <p class="eyebrow">Cennik</p>
           <h2>Dopasowany do Ciebie</h2>
         </div>
@@ -164,22 +175,22 @@
       </section>
 
       <section class="section split" id="poradnik">
-        <div>
+        <div class="reveal">
           <p class="eyebrow">Poradnik</p>
           <h2>Pierwsza wizyta bez stresu</h2>
-          <p>Trzy najwazniejsze informacje dla nowych klubowiczow. Bez osobnej podstrony i bez dlugiego regulaminowego tonu.</p>
+          <p>Trzy najważniejsze rzeczy dla nowych klubowiczów — bez regulaminowego tonu.</p>
         </div>
         <div class="tips-grid">
-          <article>
-            <h3>Wez obuwie</h3>
-            <p>Wygodne buty na zmiane i recznik treningowy.</p>
+          <article class="reveal">
+            <h3>Weź obuwie</h3>
+            <p>Wygodne buty na zmianę i ręcznik treningowy.</p>
           </article>
-          <article>
-            <h3>Podejdz do recepcji</h3>
-            <p>Pomozemy wybrac karnet i pokazemy klub.</p>
+          <article class="reveal">
+            <h3>Podejdź do recepcji</h3>
+            <p>Pomożemy wybrać karnet i pokażemy klub.</p>
           </article>
-          <article>
-            <h3>Dbaj o sprzet</h3>
+          <article class="reveal">
+            <h3>Dbaj o sprzęt</h3>
             <p>Odkładaj akcesoria i dezynfekuj stanowisko po treningu.</p>
           </article>
         </div>
