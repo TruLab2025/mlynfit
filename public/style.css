@@ -152,6 +152,20 @@ address {
   filter: invert(1) brightness(1.1);
 }
 
+.back-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--accent);
+  transition: color var(--transition);
+}
+
+.brand:hover .back-arrow {
+  color: var(--text);
+}
+
 .site-nav {
   display: flex;
   justify-content: center;
@@ -794,7 +808,7 @@ address {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 16px;
-  align-items: start;
+  align-items: stretch;
 }
 
 .price-card {
@@ -803,6 +817,8 @@ address {
   border: 1px solid var(--line);
   border-radius: var(--radius);
   transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition);
+  display: flex;
+  flex-direction: column;
 }
 
 .price-card:hover {
@@ -812,11 +828,28 @@ address {
 }
 
 .price-card.featured {
-  background: var(--cream);
+  background: #1a1715;
   border-color: var(--accent);
-  color: var(--ink);
+  color: var(--text);
   transform: translateY(-8px);
   box-shadow: 0 28px 64px rgba(242,103,34,0.22), 0 0 0 1px rgba(242,103,34,0.25);
+  position: relative;
+}
+
+.price-card.featured::before {
+  content: "Najpopularniejszy";
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--accent);
+  color: var(--ink);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border-radius: 999px;
 }
 
 .price-card.featured:hover {
@@ -825,12 +858,12 @@ address {
 
 .price-card.featured h3,
 .price-card.featured .price {
-  color: var(--ink);
+  color: var(--accent);
 }
 
 .price-card.featured p,
 .price-card.featured li {
-  color: #5a4f46;
+  color: var(--muted);
 }
 
 .price-card h3 {
@@ -879,6 +912,21 @@ body[data-page="schedule"] .section {
 }
 
 .schedule-footnote strong {
+  color: var(--accent);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.pricing-footnote {
+  margin: 34px 0 0;
+  font-size: 15px;
+  color: var(--muted);
+  text-align: center;
+}
+
+.pricing-footnote strong {
   color: var(--accent);
   font-size: 11px;
   font-weight: 700;
@@ -951,9 +999,13 @@ body[data-page="schedule"] .section {
 }
 
 .schedule-note {
+  font-family: 'Inter', Arial, sans-serif;
+  font-size: 15px !important;
+  font-weight: 800;
+  line-height: 1.25;
+  letter-spacing: 0.02em;
   color: var(--text);
-  font-weight: 600;
-  margin-bottom: 4px !important;
+  margin: 0 !important;
 }
 
 .schedule-trainer {

@@ -2,23 +2,23 @@
   "updatedAt": "2026-05-31T12:00:00+02:00",
   "items": [
     {
-      "nazwa": "Na start",
-      "cena": "129 zl",
-      "opis": "Karnet miesieczny dla osob, ktore zaczynaja regularny trening.",
+      "nazwa": "OPEN MIESIĘCZNY",
+      "cena": "150/170 zł",
+      "opis": "Korzystasz z siłowni oraz zajęć fitness przez 30 dni bez ograniczeń.",
       "wyrozniony": false,
       "aktywne": true
     },
     {
-      "nazwa": "Open",
-      "cena": "159 zl",
-      "opis": "Silownia i zajecia grupowe w jednym, prostym pakiecie.",
+      "nazwa": "OPEN TRZYMIESIĘCZNY",
+      "cena": "400/460 zł",
+      "opis": "Przy kontynuacji umowy zyskujesz 60 zł rabatu, co daje ponad 15% zniżki (133 zł/m-c). Możliwość zamrożenia do 14 dni.",
       "wyrozniony": true,
       "aktywne": true
     },
     {
-      "nazwa": "Open 12 mies.",
-      "cena": "129 zl / mies.",
-      "opis": "Najlepsza cena dla osob, ktore trenuja dlugoterminowo.",
+      "nazwa": "OPEN PÓŁROCZNY",
+      "cena": "690/760 zł",
+      "opis": "Przy kontynuacji umowy zyskujesz 10% zniżki na kolejny karnet oraz możliwość zamrożenia do 30 dni.",
       "wyrozniony": false,
       "aktywne": true
     }
