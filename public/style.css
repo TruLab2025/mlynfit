@@ -288,7 +288,7 @@ address {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 35%;
+  object-position: center 20%;
 }
 
 /* Strong overlay for text readability */
@@ -298,9 +298,9 @@ address {
   inset: 0;
   background:
     linear-gradient(105deg,
-      rgba(11,13,12,0.62) 0%,
-      rgba(11,13,12,0.40) 55%,
-      rgba(11,13,12,0.15) 100%);
+      rgba(11,13,12,0.40) 0%,
+      rgba(11,13,12,0.25) 55%,
+      rgba(11,13,12,0.05) 100%);
   z-index: 1;
 }
 
@@ -414,10 +414,17 @@ address {
    ============================================= */
 
 .page-hero {
-  min-height: 340px;
+  min-height: 680px;
   grid-template-columns: 1fr;
   padding-top: 80px;
   padding-bottom: 64px;
+}
+
+.page-hero h1,
+.page-hero > p {
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .schedule-intro {
@@ -430,12 +437,22 @@ address {
 }
 
 .business-hero {
+  gap: 16px;
   background-image: 
-    linear-gradient(110deg, rgba(11,13,12,0.82), rgba(11,13,12,0.82)),
-    url('/assets/business-hero.jpg');
+    linear-gradient(110deg, rgba(11,13,12,0.60), rgba(11,13,12,0.60)),
+    url('/assets/mlynfit-desktop-web.jpg');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
+}
+
+@media (max-width: 900px) {
+  .business-hero {
+    background-image: 
+      linear-gradient(110deg, rgba(11,13,12,0.60), rgba(11,13,12,0.60)),
+      url('/assets/mlynfit-mobile-web.jpg');
+    background-attachment: scroll;
+  }
 }
 
 /* =============================================
