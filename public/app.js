@@ -174,7 +174,7 @@
           goTo(currentIndex, false);
         }
         isAnimating = false;
-      }, 340);
+      }, 350);
     });
 
     next.addEventListener("click", function () {
@@ -188,7 +188,7 @@
           goTo(currentIndex, false);
         }
         isAnimating = false;
-      }, 340);
+      }, 350);
     });
   }
 

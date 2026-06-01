@@ -430,12 +430,12 @@ address {
 }
 
 .business-hero {
-  background:
-    linear-gradient(110deg, rgba(11,13,12,0.96), rgba(11,13,12,0.70)),
-    repeating-linear-gradient(135deg,
-      rgba(242,103,34,0.14) 0, rgba(242,103,34,0.14) 1px,
-      transparent 1px, transparent 22px),
-    linear-gradient(135deg, #121716, #2a241e);
+  background-image: 
+    linear-gradient(110deg, rgba(11,13,12,0.82), rgba(11,13,12,0.82)),
+    url('/assets/business-hero.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
 }
 
 /* =============================================
@@ -539,7 +539,7 @@ address {
   gap: 14px;
   align-items: start;
   overflow-x: auto;
-  scroll-snap-type: x mandatory;
+  scroll-snap-type: none;
   scroll-behavior: smooth;
   scrollbar-width: none;
 }
@@ -717,7 +717,7 @@ address {
 
 .feature-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 16px;
 }
 
@@ -1075,13 +1075,6 @@ body[data-page="schedule"] .section {
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: #fff;
-  border-bottom: 1px solid rgba(255,255,255,0.55);
-  padding-bottom: 3px;
-  transition: border-color var(--transition);
-}
-
-.map-link:hover {
-  border-color: #fff;
 }
 
 .map-card {
