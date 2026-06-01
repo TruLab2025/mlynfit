@@ -15,6 +15,7 @@
     { key: "Sobota", label: "Sobota" },
     { key: "Niedziela", label: "Niedziela" }
   ];
+  var classSliderReady = false;
 
   function qs(selector) {
     return document.querySelector(selector);
@@ -59,7 +60,10 @@
     'spalanie':     '/assets/hiit_tile_600x400.webp',
     'tabata':       '/assets/hiit_tile_600x400.webp',
     'body pump':    '/assets/bodypump_tile_600x400.webp',
-    'figura':       '/assets/bodypump_tile_600x400.webp',
+    'figura':       '/assets/modelowanie_sylwetki_tile_600x400.webp',
+    'brzuch uda':   '/assets/modelowanie_sylwetki_tile_600x400.webp',
+    'plaski brzuch': '/assets/modelowanie_sylwetki_tile_600x400.webp',
+    'płaski brzuch': '/assets/modelowanie_sylwetki_tile_600x400.webp',
     'kształtowanie': '/assets/modelowanie_sylwetki_tile_600x400.webp',
     'ksztaltowanie': '/assets/modelowanie_sylwetki_tile_600x400.webp',
     'modelowanie':  '/assets/modelowanie_sylwetki_tile_600x400.webp',
@@ -83,12 +87,15 @@
     var node = qs("[data-today-classes]");
     if (!node) return;
 
-    var seen = {};
-    var classItems = items.filter(function (item) {
-      var key = (item.nazwa || "").toLowerCase();
-      if (!key || seen[key]) return false;
-      seen[key] = true;
-      return true;
+    var seenTiles = {};
+    var classItems = [];
+
+    items.forEach(function (item) {
+      if (classItems.length >= 7) return;
+      var tile = getTile(item.nazwa);
+      if (!tile || seenTiles[tile]) return;
+      seenTiles[tile] = true;
+      classItems.push(item);
     });
 
     if (!classItems.length) {
@@ -108,16 +115,11 @@
       var imgHtml = tile
         ? '<div class="class-card-img"><img src="' + tile + '" alt="' + item.nazwa + '" loading="lazy"></div>'
         : '';
-      var noteHtml = item.opis ? '<p class="class-card-note">' + item.opis + '</p>' : '';
-      var trainerHtml = item.trener ? '<p class="class-card-trainer">' + item.trener + '</p>' : '';
       return [
         '<article class="class-card">',
         imgHtml,
-        '<div class="class-card-body">',
-        '<span class="time">' + item.godzina + '</span>',
+        '<div class="class-card-label">',
         '<h3>' + item.nazwa + '</h3>',
-        noteHtml,
-        trainerHtml,
         '</div>',
         '</article>'
       ].join('');
@@ -130,6 +132,19 @@
     var prev = qs("[data-class-prev]");
     var next = qs("[data-class-next]");
     if (!slider || !track || !prev || !next) return;
+    if (classSliderReady) return;
+    classSliderReady = true;
+
+    var cards = qsa("[data-today-classes] .class-card");
+    var cardCount = cards.length;
+    if (cardCount < 2) return;
+
+    var firstClone = cards[0].cloneNode(true);
+    var lastClone = cards[cardCount - 1].cloneNode(true);
+    firstClone.classList.add("is-clone");
+    lastClone.classList.add("is-clone");
+    track.insertBefore(lastClone, cards[0]);
+    track.appendChild(firstClone);
 
     function step() {
       var firstCard = track.querySelector(".class-card");
@@ -138,12 +153,42 @@
       return firstCard.getBoundingClientRect().width + gap;
     }
 
+    function goTo(index, smooth) {
+      var left = step() * index;
+      track.scrollTo({ left: left, behavior: smooth ? "smooth" : "auto" });
+    }
+
+    // Start on first real slide (index 1, because index 0 is lastClone).
+    var currentIndex = 1;
+    var isAnimating = false;
+    goTo(currentIndex, false);
+
     prev.addEventListener("click", function () {
-      track.scrollBy({ left: -step(), behavior: "smooth" });
+      if (isAnimating) return;
+      isAnimating = true;
+      currentIndex -= 1;
+      goTo(currentIndex, true);
+      window.setTimeout(function () {
+        if (currentIndex === 0) {
+          currentIndex = cardCount;
+          goTo(currentIndex, false);
+        }
+        isAnimating = false;
+      }, 340);
     });
 
     next.addEventListener("click", function () {
-      track.scrollBy({ left: step(), behavior: "smooth" });
+      if (isAnimating) return;
+      isAnimating = true;
+      currentIndex += 1;
+      goTo(currentIndex, true);
+      window.setTimeout(function () {
+        if (currentIndex === cardCount + 1) {
+          currentIndex = 1;
+          goTo(currentIndex, false);
+        }
+        isAnimating = false;
+      }, 340);
     });
   }
 
@@ -238,12 +283,12 @@
   function init() {
     initNav();
     initReveal();
-    initClassSlider();
 
     fetchJson(DATA_PATHS.schedule)
       .then(activeItems)
       .then(function (items) {
         renderTodayClasses(items);
+        initClassSlider();
         renderSchedule(items);
       })
       .catch(function (error) {
@@ -251,6 +296,7 @@
         // Render placeholders if schedule cannot be loaded
         try {
           renderTodayClasses([]);
+          initClassSlider();
         } catch (e) { /* ignore */ }
       });
 
