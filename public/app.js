@@ -6,7 +6,15 @@
     site: "/data/site.json"
   };
 
-  var DAYS = ["Poniedzialek", "Wtorek", "Sroda", "Czwartek", "Piatek", "Sobota", "Niedziela"];
+  var DAYS = [
+    { key: "Poniedzialek", label: "Poniedziałek" },
+    { key: "Wtorek", label: "Wtorek" },
+    { key: "Sroda", label: "Środa" },
+    { key: "Czwartek", label: "Czwartek" },
+    { key: "Piatek", label: "Piątek" },
+    { key: "Sobota", label: "Sobota" },
+    { key: "Niedziela", label: "Niedziela" }
+  ];
 
   function qs(selector) {
     return document.querySelector(selector);
@@ -34,9 +42,9 @@
   function groupByDay(items) {
     return DAYS.map(function (day) {
       return {
-        day: day,
+        day: day.label,
         items: items.filter(function (item) {
-          return item.dzien === day;
+          return item.dzien === day.key;
         })
       };
     }).filter(function (group) {
@@ -52,11 +60,15 @@
     'tabata':       '/assets/hiit_tile_600x400.webp',
     'body pump':    '/assets/bodypump_tile_600x400.webp',
     'figura':       '/assets/bodypump_tile_600x400.webp',
-    'kształtowanie': '/assets/bodypump_tile_600x400.webp',
-    'kregoslup':    '/assets/kregoslup_tile_600x400.webp',
-    'kręgosłup':    '/assets/kregoslup_tile_600x400.webp',
-    'salsation':    '/assets/pilates_tile_600x400.webp',
-    'stretching':   '/assets/kregoslup_tile_600x400.webp'
+    'kształtowanie': '/assets/modelowanie_sylwetki_tile_600x400.webp',
+    'ksztaltowanie': '/assets/modelowanie_sylwetki_tile_600x400.webp',
+    'modelowanie':  '/assets/modelowanie_sylwetki_tile_600x400.webp',
+    'kickboxing':   '/assets/kickboxing_tile_600x400.webp',
+    'kickobxing':   '/assets/kickboxing_tile_600x400.webp',
+    'kregoslup':    '/assets/kregoslup_tile_original_600x400.webp',
+    'kręgosłup':    '/assets/kregoslup_tile_original_600x400.webp',
+    'salsation':    '/assets/salsation_tile_600x400.webp',
+    'stretching':   '/assets/kregoslup_tile_original_600x400.webp'
   };
 
   function getTile(nazwa) {
@@ -71,40 +83,68 @@
     var node = qs("[data-today-classes]");
     if (!node) return;
 
-    var todayIndex = new Date().getDay();
-    var dayName = DAYS[todayIndex === 0 ? 6 : todayIndex - 1];
-    var todaysItems = items.filter(function (item) {
-      return item.dzien === dayName;
-    }).slice(0, 4);
+    var seen = {};
+    var classItems = items.filter(function (item) {
+      var key = (item.nazwa || "").toLowerCase();
+      if (!key || seen[key]) return false;
+      seen[key] = true;
+      return true;
+    });
 
-    if (!todaysItems.length) {
-      todaysItems = (items && items.slice && items.slice(0, 4)) || [];
-    }
-
-    if (!todaysItems.length) {
-      todaysItems = [
+    if (!classItems.length) {
+      classItems = [
         { godzina: '17:00', nazwa: 'Pilates', trener: 'Kasia' },
         { godzina: '18:00', nazwa: 'HIIT', trener: 'Ania' },
         { godzina: '19:00', nazwa: 'Zdrowy Kręgosłup', trener: 'Kasia' },
-        { godzina: '20:00', nazwa: 'Body Pump', trener: 'Michał' }
+        { godzina: '20:00', nazwa: 'Body Pump', trener: 'Michał' },
+        { godzina: '18:00', nazwa: 'Kickboxing', opis: '7-12 lat' },
+        { godzina: '19:30', nazwa: 'Kształtowanie sylwetki + rozciąganie' },
+        { godzina: '18:00', nazwa: 'Salsation' }
       ];
     }
 
-    node.innerHTML = todaysItems.map(function (item) {
+    node.innerHTML = classItems.map(function (item) {
       var tile = getTile(item.nazwa);
       var imgHtml = tile
         ? '<div class="class-card-img"><img src="' + tile + '" alt="' + item.nazwa + '" loading="lazy"></div>'
         : '';
+      var noteHtml = item.opis ? '<p class="class-card-note">' + item.opis + '</p>' : '';
+      var trainerHtml = item.trener ? '<p class="class-card-trainer">' + item.trener + '</p>' : '';
       return [
         '<article class="class-card">',
         imgHtml,
         '<div class="class-card-body">',
         '<span class="time">' + item.godzina + '</span>',
         '<h3>' + item.nazwa + '</h3>',
+        noteHtml,
+        trainerHtml,
         '</div>',
         '</article>'
       ].join('');
     }).join('');
+  }
+
+  function initClassSlider() {
+    var slider = qs("[data-class-slider]");
+    var track = qs("[data-today-classes]");
+    var prev = qs("[data-class-prev]");
+    var next = qs("[data-class-next]");
+    if (!slider || !track || !prev || !next) return;
+
+    function step() {
+      var firstCard = track.querySelector(".class-card");
+      if (!firstCard) return 320;
+      var gap = 14;
+      return firstCard.getBoundingClientRect().width + gap;
+    }
+
+    prev.addEventListener("click", function () {
+      track.scrollBy({ left: -step(), behavior: "smooth" });
+    });
+
+    next.addEventListener("click", function () {
+      track.scrollBy({ left: step(), behavior: "smooth" });
+    });
   }
 
   function renderSchedule(items) {
@@ -117,11 +157,14 @@
         '<h2>' + group.day + '</h2>',
         group.items.map(function (item) {
           return [
-            '<div class="schedule-item">',
-            '<span class="time">' + item.godzina + '</span>',
+            '<article class="schedule-item">',
+            '<div class="schedule-time">' + item.godzina + '</div>',
+            '<div class="schedule-content">',
             '<h3>' + item.nazwa + '</h3>',
-            '<p>' + (item.trener || "") + '</p>',
-            '</div>'
+            item.opis ? '<p class="schedule-note">' + item.opis + '</p>' : '',
+            item.trener ? '<p class="schedule-trainer">' + item.trener + '</p>' : '',
+            '</div>',
+            '</article>'
           ].join("");
         }).join(""),
         '</section>'
@@ -195,6 +238,7 @@
   function init() {
     initNav();
     initReveal();
+    initClassSlider();
 
     fetchJson(DATA_PATHS.schedule)
       .then(activeItems)

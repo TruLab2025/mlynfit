@@ -406,6 +406,15 @@ address {
   padding-bottom: 64px;
 }
 
+.schedule-intro {
+  margin: 0 0 20px;
+}
+
+.schedule-intro h1 {
+  max-width: 10em;
+  margin-bottom: 12px;
+}
+
 .business-hero {
   background:
     linear-gradient(110deg, rgba(11,13,12,0.96), rgba(11,13,12,0.70)),
@@ -511,9 +520,43 @@ address {
 
 .class-cards {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(240px, 1fr);
   gap: 14px;
   align-items: start;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+
+.class-cards::-webkit-scrollbar {
+  display: none;
+}
+
+.class-slider {
+  position: relative;
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr) 48px;
+  gap: 12px;
+  align-items: center;
+}
+
+.slider-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text);
+  font-size: 30px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background var(--transition), border-color var(--transition);
+}
+
+.slider-btn:hover {
+  background: rgba(242, 103, 34, 0.14);
+  border-color: rgba(242, 103, 34, 0.35);
 }
 
 .class-card {
@@ -524,6 +567,7 @@ address {
   aspect-ratio: 3 / 2;
   cursor: default;
   transition: transform var(--transition), box-shadow var(--transition);
+  scroll-snap-align: start;
 }
 
 .class-card img {
@@ -599,6 +643,20 @@ address {
 
 .class-card-body .trainer {
   font-size: 13px;
+  color: var(--muted);
+}
+
+.class-card-body .class-card-note,
+.class-card-body .class-card-trainer {
+  margin: 0;
+  font-size: 13px;
+}
+
+.class-card-body .class-card-note {
+  color: var(--text);
+}
+
+.class-card-body .class-card-trainer {
   color: var(--muted);
 }
 
@@ -805,49 +863,100 @@ address {
 
 .schedule-board {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 14px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+body[data-page="schedule"] .section {
+  padding-top: 48px;
+}
+
+.schedule-footnote {
+  margin: 34px 0 0;
+  font-size: 15px;
+  color: var(--muted);
+}
+
+.schedule-footnote strong {
+  color: var(--accent);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
 }
 
 .schedule-day {
-  padding: 28px 24px;
-  background: var(--panel-soft);
+  padding: 24px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01)),
+    var(--panel-soft);
   border: 1px solid var(--line);
-  border-radius: var(--radius);
+  border-radius: 14px;
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.16);
 }
 
 .schedule-day h2 {
   font-family: 'Inter', Arial, sans-serif;
   font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
+  font-weight: 800;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--accent);
-  margin-bottom: 16px;
+  margin-bottom: 14px;
 }
 
 .schedule-item {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
   padding: 14px 0;
   border-top: 1px solid var(--line);
 }
 
-.schedule-item .time {
+.schedule-item:first-of-type {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.schedule-time {
+  font-family: 'Playfair Display', Georgia, serif;
   font-size: 20px;
-  margin-bottom: 4px;
+  line-height: 1;
+  color: var(--accent);
+  font-weight: 700;
+  padding-top: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.schedule-content {
+  min-width: 0;
 }
 
 .schedule-item h3 {
   font-family: 'Inter', Arial, sans-serif;
-  font-size: 14px;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  text-transform: none;
   margin-bottom: 4px;
+  color: var(--text);
+  word-break: normal;
+  overflow-wrap: break-word;
 }
 
 .schedule-item p {
   font-size: 13px;
   margin: 0;
+}
+
+.schedule-note {
+  color: var(--text);
+  font-weight: 600;
+  margin-bottom: 4px !important;
+}
+
+.schedule-trainer {
+  color: var(--muted);
 }
 
 /* =============================================
@@ -860,6 +969,12 @@ address {
   border: 1px solid var(--line);
   border-radius: var(--radius);
   margin-bottom: 32px;
+}
+
+.schedule-notice {
+  font-family: 'Inter', Arial, sans-serif;
+  font-size: 15px;
+  letter-spacing: 0.02em;
 }
 
 .contact-section {
@@ -1045,8 +1160,12 @@ address {
     border-right: 0;
   }
 
-  .class-cards {
-    grid-template-columns: repeat(2, 1fr);
+  .class-slider {
+    grid-template-columns: 1fr;
+  }
+
+  .slider-btn {
+    display: none;
   }
 
   .feature-grid,
@@ -1066,6 +1185,10 @@ address {
 
   .schedule-board {
     grid-template-columns: 1fr;
+  }
+
+  .schedule-intro h1 {
+    max-width: none;
   }
 
   .section-head {
@@ -1089,7 +1212,7 @@ address {
 
 @media (max-width: 520px) {
   .class-cards {
-    grid-template-columns: 1fr;
+    grid-auto-columns: minmax(86%, 1fr);
   }
 
   h1 {
