@@ -1,4 +1,5 @@
-/* =============================================
+ 
+ /* =============================================
    MLYNfit — Design System v2
    Fonts: Playfair Display (headings) + Inter (body)
    Import via <link> in HTML head
@@ -298,9 +299,9 @@ address {
   inset: 0;
   background:
     linear-gradient(105deg,
-      rgba(11,13,12,0.40) 0%,
-      rgba(11,13,12,0.25) 55%,
-      rgba(11,13,12,0.05) 100%);
+      rgba(11,13,12,0.65) 0%,
+      rgba(11,13,12,0.45) 55%,
+      rgba(11,13,12,0.20) 100%);
   z-index: 1;
 }
 
@@ -428,12 +429,19 @@ address {
 }
 
 .schedule-intro {
-  margin: 0 0 20px;
+  margin: 0 auto 20px;
+  max-width: 720px;
+  text-align: left;
 }
 
 .schedule-intro h1 {
   max-width: 10em;
   margin-bottom: 12px;
+  white-space: nowrap;
+}
+
+.page-hero .hero-inner p {
+  font-size: 18px;
 }
 
 .business-hero {
@@ -653,43 +661,79 @@ address {
 }
 
 
-.class-card-body .time {
-  display: block;
-  margin-bottom: 6px;
-  font-size: 24px;
-  font-weight: 900;
-  color: var(--accent);
-  letter-spacing: -0.02em;
+.class-card-time {
+  display: inline-block;
+  margin-bottom: 4px;
+  padding: 2px 8px;
+  background: var(--accent);
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: var(--ink);
   font-variant-numeric: tabular-nums;
 }
 
-.class-card-body h3 {
-  font-family: 'Inter', Arial, sans-serif;
-  font-size: 13px;
+.class-card-note,
+.class-card-trainer {
+  margin: 4px 0 0;
+  font-size: 12px;
+}
+
+.class-card-note {
+  color: var(--text);
+}
+
+.class-card-trainer {
+  color: var(--muted);
+}
+
+/* =============================================
+   SR-ONLY (skip link / accessibility)
+   ============================================= */
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 8px;
+  z-index: 1000;
+  padding: 8px 16px;
+  background: var(--accent);
+  color: var(--ink);
   font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--text);
-  margin-bottom: 6px;
+  font-size: 14px;
+  border-radius: 0 0 6px 6px;
+  transition: top 0.2s;
 }
 
-.class-card-body .trainer {
-  font-size: 13px;
-  color: var(--muted);
+.skip-link:focus {
+  top: 0;
 }
 
-.class-card-body .class-card-note,
-.class-card-body .class-card-trainer {
-  margin: 0;
-  font-size: 13px;
-}
+/* =============================================
+   ERROR MESSAGE
+   ============================================= */
 
-.class-card-body .class-card-note {
-  color: var(--text);
-}
-
-.class-card-body .class-card-trainer {
-  color: var(--muted);
+.error-message {
+  padding: 24px;
+  text-align: center;
+  background: rgba(255, 80, 50, 0.08);
+  border: 1px solid rgba(255, 80, 50, 0.25);
+  border-radius: var(--radius);
+  color: #f88;
+  font-size: 14px;
 }
 
 /* =============================================
@@ -768,6 +812,26 @@ address {
   font-size: 22px;
 }
 
+.feature-grid .offer-price {
+  display: block;
+  margin: 10px 0 14px;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 42px;
+  font-weight: 900;
+  color: var(--accent);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.feature-grid .offer-price + p {
+  margin-top: 8px;
+}
+
+.feature-grid article p strong {
+  display: none;
+}
+
 /* =============================================
    TIPS GRID (poradnik)
    ============================================= */
@@ -805,7 +869,7 @@ address {
   position: relative;
   padding-left: 24px;
   margin-bottom: 10px;
-  font-size: 15px;
+  font-size: 16px;
   color: var(--muted);
 }
 
@@ -1030,6 +1094,75 @@ body[data-page="schedule"] .section {
 }
 
 /* =============================================
+   REGULAMIN
+   ============================================= */
+
+.regulamin-content {
+  display: grid;
+  gap: 24px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.regulamin-section {
+  padding: 28px 32px;
+  background: var(--panel-soft);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.regulamin-section h2 {
+  font-family: 'Inter', Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--line);
+}
+
+.regulamin-section ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: item;
+}
+
+.regulamin-section ol li {
+  position: relative;
+  padding-left: 28px;
+  margin-bottom: 10px;
+  font-size: 15px;
+  color: var(--muted);
+  line-height: 1.5;
+  counter-increment: item;
+}
+
+.regulamin-section ol li::before {
+  content: counter(item) ".";
+  position: absolute;
+  left: 0;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.regulamin-section ol li:last-child {
+  margin-bottom: 0;
+}
+
+.regulamin-content a[href^="mailto:"] {
+  color: var(--accent);
+  transition: color var(--transition);
+}
+
+.regulamin-content a[href^="mailto:"]:hover {
+  color: #ff7e36;
+  text-decoration: underline;
+}
+
+/* =============================================
    CONTACT / NOTICE
    ============================================= */
 
@@ -1128,8 +1261,93 @@ body[data-page="schedule"] .section {
   color: rgba(255,255,255,0.82);
 }
 
+address a[href^="mailto:"] {
+  color: var(--accent) !important;
+  transition: color var(--transition);
+}
+
+address a[href^="mailto:"]:hover {
+  color: #ff7e36 !important;
+  text-decoration: underline;
+}
+
 /* =============================================
-   FOOTER
+   FOOTER BAND (pomarańczowa karta z danymi)
+   ============================================= */
+
+.footer-band {
+  display: grid;
+  grid-template-columns: minmax(280px, 400px) 1fr;
+  gap: 48px;
+  align-items: stretch;
+  background:
+    linear-gradient(105deg, rgba(0,0,0,0.18), transparent),
+    var(--accent);
+  color: #fff;
+  padding: 56px max(24px, calc((100vw - var(--max)) / 2));
+}
+
+.footer-band .band-copy {
+  display: grid;
+  align-content: center;
+}
+
+.footer-band .band-copy h2 {
+  color: #fff;
+  font-size: clamp(22px, 3vw, 32px);
+}
+
+.footer-band .band-copy .eyebrow {
+  color: rgba(255,255,255,0.70);
+}
+
+.footer-band .band-copy p,
+.footer-band .band-copy address,
+.footer-band .band-copy a {
+  color: rgba(255,255,255,0.82);
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 0 0 4px;
+}
+
+.footer-band .band-copy a:hover {
+  color: #fff;
+}
+
+.footer-band .band-copy strong {
+  display: block;
+  margin: 20px 0 6px;
+  padding-bottom: 6px;
+  font-family: 'Inter', Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #fff;
+  border-bottom: 1px solid rgba(255,255,255,0.25);
+}
+
+.footer-band .band-copy strong:first-of-type {
+  margin-top: 0;
+}
+
+.footer-band .map-card {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.30);
+  box-shadow: 0 24px 64px rgba(0,0,0,0.28);
+  min-height: 280px;
+}
+
+.footer-band .map-card img {
+  width: 100%;
+  height: 100%;
+  min-height: 280px;
+  object-fit: cover;
+}
+
+/* =============================================
+   FOOTER (copyright + regulamin)
    ============================================= */
 
 .site-footer {
@@ -1263,8 +1481,13 @@ body[data-page="schedule"] .section {
     margin-top: 12px;
   }
 
-  .contact-section,
-  .contact-band {
+    .site-footer {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+
+    .contact-section,
+    .contact-band {
     grid-template-columns: 1fr;
   }
 

@@ -2,28 +2,28 @@
   "updatedAt": "2026-06-01T12:00:00+02:00",
   "items": [
     {
-      "dzien": "Poniedzialek",
-      "godzina": "9:00",
+      "dzien": "Poniedziałek",
+      "godzina": "09:00",
       "nazwa": "Pilates - Wzmacnianie",
       "trener": "Zosia",
       "aktywne": true
     },
     {
-      "dzien": "Poniedzialek",
+      "dzien": "Poniedziałek",
       "godzina": "17:00",
       "nazwa": "Kickboxing",
       "opis": "7-12 lat",
       "aktywne": true
     },
     {
-      "dzien": "Poniedzialek",
+      "dzien": "Poniedziałek",
       "godzina": "18:30",
       "nazwa": "Spalanie",
       "trener": "Agnieszka",
       "aktywne": true
     },
     {
-      "dzien": "Poniedzialek",
+      "dzien": "Poniedziałek",
       "godzina": "19:30",
       "nazwa": "Stretching z elementami Yogi",
       "trener": "Agnieszka",
@@ -51,14 +51,14 @@
       "aktywne": true
     },
     {
-      "dzien": "Sroda",
+      "dzien": "Środa",
       "godzina": "19:00",
       "nazwa": "Figura",
       "trener": "Zosia",
       "aktywne": true
     },
     {
-      "dzien": "Sroda",
+      "dzien": "Środa",
       "godzina": "20:00",
       "nazwa": "Płaski brzuch",
       "trener": "Zosia",
@@ -72,7 +72,7 @@
       "aktywne": true
     },
     {
-      "dzien": "Piatek",
+      "dzien": "Piątek",
       "godzina": "18:00",
       "nazwa": "Kickboxing",
       "opis": "7-12 lat",
@@ -87,7 +87,7 @@
       "aktywne": true
     },
     {
-      "dzien": "Piatek",
+      "dzien": "Piątek",
       "godzina": "19:30",
       "nazwa": "Kształtowanie sylwetki + rozciąganie",
       "trener": "Zosia",

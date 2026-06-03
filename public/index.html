@@ -1,4 +1,4 @@
-<!doctype html>
+    <!doctype html>
 <html lang="pl">
   <head>
     <meta charset="utf-8">
@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/style.css">
-    <script src="/app.js" defer></script>
+    <script src="/app.js?v=3" defer></script>
   </head>
   <body data-page="home">
     <header class="site-header">
@@ -25,7 +25,7 @@
         <a href="/dla-firm/">Dla firm</a>
         <a href="/#kontakt">Kontakt</a>
       </nav>
-      <a class="header-cta" href="/#kontakt">Umów trening próbny</a>
+      <a class="header-cta" href="tel:798090686">Umów trening próbny</a>
     </header>
 
     <main>
@@ -38,7 +38,7 @@
           <h1>Trenuj w klubie fitness<br>z <em>charakterem</em></h1>
           <p class="hero-copy">w zabytkowym młynie pod Lublinem</p>
           <div class="hero-actions">
-            <a class="button primary" href="/#kontakt">
+            <a class="button primary" href="tel:798090686">
               Umów trening próbny
               <svg class="btn-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                 <path d="M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -136,21 +136,25 @@
           </div>
         </div>
         <div class="feature-grid">
-          <article class="reveal">
+          <article class="reveal" data-offer-item>
             <h3>KARNET JUNIOR</h3>
-            <p>Płacisz <strong>145 zł</strong> miesięcznie — karnet upoważniający do zajęć grupowych, pod warunkiem, że masz mniej niż 15 lat.</p>
+            <span class="offer-price">145 zł</span>
+            <p>Płacisz 145 zł miesięcznie — karnet upoważniający do zajęć grupowych, pod warunkiem, że masz mniej niż 15 lat.</p>
           </article>
-          <article class="reveal">
+          <article class="reveal" data-offer-item>
             <h3>KARNET 50+</h3>
-            <p>Płacisz <strong>145 zł</strong> miesięcznie — karnet upoważniający do zajęć grupowych oraz siłowni, pod warunkiem, że masz więcej niż 50 lat.</p>
+            <span class="offer-price">145 zł</span>
+            <p>Płacisz 145 zł miesięcznie — karnet upoważniający do zajęć grupowych oraz siłowni, pod warunkiem, że masz więcej niż 50 lat.</p>
           </article>
-          <article class="reveal">
+          <article class="reveal" data-offer-item>
             <h3>GYM KIDS</h3>
-            <p>Płacisz <strong>35 zł</strong> za jedno wejście na siłownię Twojego dziecka.</p>
+            <span class="offer-price">35 zł</span>
+            <p>Płacisz 35 zł za jedno wejście na siłownię Twojego dziecka.</p>
           </article>
-          <article class="reveal">
-            <h3>WEJŚCIE JEDNORAZOWE</h3>
-            <p>Płacisz <strong>35 zł</strong> i korzystasz z siłowni oraz zajęć grupowych bez ograniczeń.</p>
+          <article class="reveal" data-offer-item>
+            <h3>JEDNORAZOWO</h3>
+            <span class="offer-price">35 zł</span>
+            <p>Płacisz 35 zł i korzystasz z siłowni oraz zajęć grupowych bez ograniczeń.</p>
           </article>
         </div>
       </section>
@@ -160,14 +164,30 @@
           <p class="eyebrow">Cennik</p>
           <h2>Dopasowany do Ciebie</h2>
         </div>
-        <div class="pricing-grid" data-pricing></div>
+        <div class="pricing-grid">
+          <article class="price-card" data-pricing-item>
+            <h3>OPEN MIESIĘCZNY</h3>
+            <span class="price">150/170 zł</span>
+            <p>Korzystasz z siłowni oraz zajęć fitness przez 30 dni bez ograniczeń.</p>
+          </article>
+          <article class="price-card featured" data-pricing-item>
+            <h3>OPEN TRZYMIESIĘCZNY</h3>
+            <span class="price">400/460 zł</span>
+            <p>Przy kontynuacji umowy zyskujesz 60 zł rabatu, co daje ponad 15% zniżki (133 zł/m-c). Możliwość zamrożenia do 14 dni.</p>
+          </article>
+          <article class="price-card" data-pricing-item>
+            <h3>OPEN PÓŁROCZNY</h3>
+            <span class="price">690/760 zł</span>
+            <p>Przy kontynuacji umowy zyskujesz 10% zniżki na kolejny karnet oraz możliwość zamrożenia do 30 dni.</p>
+          </article>
+        </div>
         <p class="pricing-footnote"><strong>Ważne:</strong> Do pierwszego karnetu trening personalny z wybranym trenerem GRATIS!</p>
       </section>
 
       <section class="section split" id="poradnik">
         <div class="reveal">
           <p class="eyebrow">Poradnik</p>
-          <h2>Pierwsza wizyta bez stresu</h2>
+          <h2>Pierwszy trening bez stresu</h2>
           <p>Trzy najważniejsze rzeczy dla nowych klubowiczów — bez regulaminowego tonu.</p>
         </div>
         <div class="tips-grid">
@@ -186,23 +206,33 @@
         </div>
       </section>
 
-      <section class="section contact-section" id="kontakt">
-        <div class="contact-copy">
-          <p class="eyebrow">Kontakt</p>
-          <h2>Umów trening próbny</h2>
-          <address data-contact></address>
-          <a class="map-link" href="https://www.google.com/maps/search/?api=1&query=ul.%20Mlynska%201A%2C%2021-080%20Garbow" target="_blank" rel="noopener">Otwórz w mapach</a>
-        </div>
-        <div class="map-card">
-          <img src="/assets/static-map.svg" alt="Statyczna mapa dojazdu do MLYNfit w Garbowie" loading="lazy">
-        </div>
-      </section>
     </main>
+
+    <section class="footer-band" id="kontakt">
+      <div class="band-copy">
+        <p class="eyebrow">MLYNfit</p>
+        <h2>Skontaktuj się z nami</h2>
+        <strong>ADRES</strong>
+        <p>ul. Młyńska 1A, 21-080 Garbów</p>
+        <strong>GODZINY OTWARCIA</strong>
+        <p>pn-pt 8-22, sb 9-18, nd 9-16</p>
+        <p>czerwiec-lipiec-sierpień: pn-pt 9-22, sb-nd 10-16</p>
+        <strong>KONTAKT</strong>
+        <p><a href="tel:798090686">798 090 686</a></p>
+        <p><a href="mailto:kontakt@mlynfit.pl">kontakt@mlynfit.pl</a></p>
+        <p><a href="https://www.facebook.com/Mlynfit-1872843473022821/" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>Facebook</a></p>
+        <strong>DANE FIRMY</strong>
+        <p>Młynfit Adrian Jóźwiak</p>
+        <p>NIP: 7132998051, REGON: 369990614</p>
+      </div>
+      <div class="map-card">
+        <img src="/assets/static-map.svg" alt="Mapa dojazdu do MLYNfit" loading="lazy">
+      </div>
+    </section>
 
     <footer class="site-footer">
       <span>© MLYNfit</span>
-      <a href="/terminarz/">Grafik zajec</a>
-      <a href="/dla-firm/">Dla firm</a>
+      <a href="/regulamin/">Regulamin</a>
     </footer>
   </body>
 </html>

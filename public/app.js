@@ -1,17 +1,22 @@
 (function () {
+  var SHEETS_BASE = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQFbVVnAYRg9MTKG2kH8SxlyykZLnvW9DrN-Jrry9HXYKW2hR4Loc_1OVYGhKV7HCF7ycJTadL_DCeP/pub?output=csv";
+
   var DATA_PATHS = {
     schedule: "/data/grafik.json",
     pricing: "/data/cennik.json",
     messages: "/data/komunikaty.json",
-    site: "/data/site.json"
+    site: "/data/site.json",
+    scheduleCSV: SHEETS_BASE + "&gid=0",
+    pricingCSV: SHEETS_BASE + "&gid=206099927",
+    offerCSV: SHEETS_BASE + "&gid=834507938"
   };
 
   var DAYS = [
-    { key: "Poniedzialek", label: "Poniedziałek" },
+    { key: "Poniedziałek", label: "Poniedziałek" },
     { key: "Wtorek", label: "Wtorek" },
-    { key: "Sroda", label: "Środa" },
+    { key: "Środa", label: "Środa" },
     { key: "Czwartek", label: "Czwartek" },
-    { key: "Piatek", label: "Piątek" },
+    { key: "Piątek", label: "Piątek" },
     { key: "Sobota", label: "Sobota" },
     { key: "Niedziela", label: "Niedziela" }
   ];
@@ -38,6 +43,104 @@
     return (payload.items || []).filter(function (item) {
       return item.aktywne !== false;
     });
+  }
+
+  /* ---------- CSV parser ---------- */
+  function parseCSVLine(line) {
+    var result = [];
+    var current = '';
+    var inQuotes = false;
+    for (var i = 0; i < line.length; i++) {
+      var ch = line[i];
+      if (inQuotes) {
+        if (ch === '"' && line[i + 1] === '"') {
+          current += '"';
+          i++;
+        } else if (ch === '"') {
+          inQuotes = false;
+        } else {
+          current += ch;
+        }
+      } else {
+        if (ch === '"') {
+          inQuotes = true;
+        } else if (ch === ',') {
+          result.push(current.trim());
+          current = '';
+        } else {
+          current += ch;
+        }
+      }
+    }
+    result.push(current.trim());
+    return result;
+  }
+
+  function fetchCSV(url) {
+    var bustUrl = url + '&_cb=' + Date.now() + Math.random();
+    var controller = new AbortController();
+    var timer = setTimeout(function () { controller.abort(); }, 4000);
+    return fetch(bustUrl, { cache: "no-store", signal: controller.signal }).then(function (response) {
+      clearTimeout(timer);
+      if (!response.ok) throw new Error("Nie udalo sie pobrac " + url);
+      return response.text();
+    }).then(function (text) {
+      if (text.charCodeAt(0) === 0xFEFF) {
+        text = text.slice(1);
+      }
+      var lines = text.replace(/\r\n/g, '\n').replace(/\r/g, '\n').split('\n').filter(function (l) { return l.trim(); });
+      if (lines.length < 2) return [];
+      var headers = parseCSVLine(lines[0]);
+      var items = [];
+      for (var i = 1; i < lines.length; i++) {
+        var values = parseCSVLine(lines[i]);
+        var obj = {};
+        for (var j = 0; j < headers.length; j++) {
+          var key = headers[j].trim();
+          var val = values[j] || '';
+          if (val === 'TRUE') val = true;
+          else if (val === 'FALSE') val = false;
+          obj[key] = val;
+        }
+        if (obj.aktywne !== false) items.push(obj);
+      }
+      return items;
+    });
+  }
+
+  /* ---------- CSV parser dla terminarza (bez nagłówkow) ---------- */
+  function fetchScheduleCSV(url) {
+    var bustUrl = url + '&_t=' + Date.now();
+    var controller = new AbortController();
+    var timer = setTimeout(function () { controller.abort(); }, 5000);
+    return fetch(bustUrl, { signal: controller.signal }).then(function (response) {
+      clearTimeout(timer);
+      if (!response.ok) throw new Error("CSV error");
+      return response.text();
+    }).then(function (text) {
+      if (text.charCodeAt(0) === 0xFEFF) text = text.slice(1);
+      var lines = text.replace(/\r\n/g, '\n').replace(/\r/g, '\n').split('\n').filter(function (l) { return l.trim(); });
+      if (lines.length < 2) return [];
+      // Skip header row
+      lines.shift();
+      return lines.map(function (line) {
+        var vals = parseCSVLine(line);
+        return {
+          dzien: vals[0] || '',
+          godzina: vals[1] || '',
+          nazwa: vals[2] || '',
+          trener: vals[3] || '',
+          opis: vals[4] || '',
+          aktywne: (vals[5] || '').toUpperCase() !== 'FALSE'
+        };
+      }).filter(function (item) { return item.aktywne && item.dzien; });
+    });
+  }
+
+  /* ---------- JSON od razu, CSV w tle ---------- */
+  function fetchSchedule(csvUrl, jsonUrl, onData) {
+    fetchJson(jsonUrl).then(function (p) { onData(activeItems(p)); }).catch(function () {});
+    fetchScheduleCSV(csvUrl).then(onData).catch(function () {});
   }
 
   function groupByDay(items) {
@@ -158,7 +261,6 @@
       track.scrollTo({ left: left, behavior: smooth ? "smooth" : "auto" });
     }
 
-    // Start on first real slide (index 1, because index 0 is lastClone).
     var currentIndex = 1;
     var isAnimating = false;
     goTo(currentIndex, false);
@@ -221,8 +323,10 @@
     var node = qs("[data-pricing]");
     if (!node) return;
 
-    node.innerHTML = items.map(function (item) {
-      var className = item.wyrozniony ? "price-card featured" : "price-card";
+    // Srodkowy kafelek (indeks 1) podświetlony
+    node.innerHTML = items.map(function (item, idx) {
+      var featured = (idx === 1) ? true : false;
+      var className = featured ? "price-card featured" : "price-card";
       return [
         '<article class="' + className + '">',
         '<h3>' + item.nazwa + '</h3>',
@@ -284,28 +388,47 @@
     initNav();
     initReveal();
 
-    fetchJson(DATA_PATHS.schedule)
-      .then(activeItems)
-      .then(function (items) {
-        renderTodayClasses(items);
-        initClassSlider();
-        renderSchedule(items);
-      })
-      .catch(function (error) {
-        console.warn(error.message);
-        // Render placeholders if schedule cannot be loaded
-        try {
-          renderTodayClasses([]);
-          initClassSlider();
-        } catch (e) { /* ignore */ }
-      });
+    // Schedule: JSON od razu, CSV w tle
+    fetchSchedule(DATA_PATHS.scheduleCSV, DATA_PATHS.schedule, function (items) {
+      renderTodayClasses(items);
+      initClassSlider();
+      renderSchedule(items);
+    });
 
-    fetchJson(DATA_PATHS.pricing)
-      .then(activeItems)
-      .then(renderPricing)
-      .catch(function (error) {
-        console.warn(error.message);
+    // Nadpisywanie kafelkow: pierwsze 4 do oferty, reszta do cennika
+    function applyPricing(items) {
+      // Oferta (pierwsze 4)
+      items.slice(0, 4).forEach(function (item) {
+        var cards = qsa("[data-offer-item]");
+        for (var i = 0; i < cards.length; i++) {
+          var h3 = cards[i].querySelector("h3");
+          if (h3 && h3.textContent.trim() === item.nazwa.trim()) {
+            var priceEl = cards[i].querySelector(".offer-price");
+            var pEl = cards[i].querySelector("p");
+            if (priceEl) priceEl.textContent = item.cena.replace(/(\d)zł/g, '$1 zł');
+            if (pEl) pEl.textContent = item.opis;
+            break;
+          }
+        }
       });
+      // Cennik (reszta)
+      items.slice(4).forEach(function (item) {
+        var cards = qsa("[data-pricing-item]");
+        for (var i = 0; i < cards.length; i++) {
+          var h3 = cards[i].querySelector("h3");
+          if (h3 && h3.textContent.trim() === item.nazwa.trim()) {
+            var priceEl = cards[i].querySelector(".price");
+            var pEl = cards[i].querySelector("p");
+            if (priceEl) priceEl.textContent = item.cena;
+            if (pEl) pEl.textContent = item.opis;
+            break;
+          }
+        }
+      });
+    }
+
+    // Tylko CSV w tle nadpisuje statyczne kafelki
+    fetchCSV(DATA_PATHS.pricingCSV).then(applyPricing).catch(function () {});
 
     fetchJson(DATA_PATHS.messages)
       .then(activeItems)

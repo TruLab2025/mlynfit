@@ -5,10 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Grafik zajęć - MLYNfit</title>
     <meta name="description" content="Aktualny grafik zajęć MLYNfit.">
-    <link rel="stylesheet" href="/style.css">
-    <script src="/app.js" defer></script>
+    <!-- Open Graph / Social -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Grafik zajęć - MLYNfit">
+    <meta property="og:description" content="Aktualny grafik zajęć MLYNfit w Garbowie.">
+    <meta property="og:url" content="https://mlynfit.pl/terminarz/">
+    <meta property="og:locale" content="pl_PL">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Grafik zajęć - MLYNfit">
+    <meta name="twitter:description" content="Aktualny grafik zajęć MLYNfit w Garbowie.">
+    <link rel="stylesheet" href="/style.css?v=2">
+    <script src="/app.js?v=3" defer></script>
   </head>
   <body data-page="schedule">
+    <a class="skip-link" href="#main-content">Przejdź do treści</a>
     <header class="site-header">
       <a class="brand" href="/" aria-label="Wróć na stronę główną">
         <span class="back-arrow">← Wróć</span>
@@ -25,7 +35,7 @@
       <a class="header-cta" href="/#kontakt">Umów trening próbny</a>
     </header>
 
-    <main>
+    <main id="main-content">
       <section class="section">
         <header class="schedule-intro">
           <p class="eyebrow">Grafik zajęć</p>
@@ -36,10 +46,31 @@
       </section>
     </main>
 
+    <section class="footer-band">
+      <div class="band-copy">
+        <p class="eyebrow">MLYNfit</p>
+        <h2>Kontakt</h2>
+        <strong>ADRES</strong>
+        <p>ul. Młyńska 1A, 21-080 Garbów</p>
+        <strong>GODZINY OTWARCIA</strong>
+        <p>pn-pt 8-22, sb 9-18, nd 9-16</p>
+        <p>czerwiec-lipiec-sierpień: pn-pt 9-22, sb-nd 10-16</p>
+        <strong>KONTAKT</strong>
+        <p><a href="tel:798090686">798 090 686</a></p>
+        <p><a href="mailto:kontakt@mlynfit.pl">kontakt@mlynfit.pl</a></p>
+        <p><a href="https://www.facebook.com/Mlynfit-1872843473022821/" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>Facebook</a></p>
+        <strong>DANE FIRMY</strong>
+        <p>Młynfit Adrian Jóźwiak</p>
+        <p>NIP: 7132998051, REGON: 369990614</p>
+      </div>
+      <div class="map-card">
+        <img src="/assets/static-map.svg" alt="Mapa dojazdu do MLYNfit" loading="lazy">
+      </div>
+    </section>
+
     <footer class="site-footer">
       <span>© MLYNfit</span>
-      <a href="/">Strona glowna</a>
-      <a href="/dla-firm/">Dla firm</a>
+      <a href="/regulamin/">Regulamin</a>
     </footer>
   </body>
 </html>
