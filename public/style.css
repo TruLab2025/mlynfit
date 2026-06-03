@@ -1396,12 +1396,20 @@ address a[href^="mailto:"]:hover {
     grid-column: 1 / -1;
     justify-items: start;
     gap: 0;
-    padding-bottom: 12px;
+    padding: 0;
+    background: rgba(11, 13, 12, 0.97);
+    border-bottom: 1px solid var(--line);
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    width: 100%;
   }
 
   .site-nav.is-open a {
     width: 100%;
-    padding: 13px 0;
+    padding: 18px max(24px, calc((100vw - var(--max)) / 2));
+    font-size: 15px;
     border-top: 1px solid var(--line);
     border-radius: 0;
   }
