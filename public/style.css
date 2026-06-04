@@ -623,6 +623,11 @@ address {
   scroll-snap-type: none;
   scroll-behavior: smooth;
   scrollbar-width: none;
+  min-height: 200px;
+}
+
+[data-today-classes]:empty {
+  min-height: 200px;
 }
 
 .class-cards::-webkit-scrollbar {
