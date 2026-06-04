@@ -1277,73 +1277,169 @@ address a[href^="mailto:"]:hover {
 
 .footer-band {
   display: grid;
-  grid-template-columns: minmax(280px, 400px) 1fr;
-  gap: 48px;
-  align-items: stretch;
+  grid-template-columns: 1fr;
+  gap: 24px 48px;
+  align-items: start;
   background:
     linear-gradient(105deg, rgba(0,0,0,0.18), transparent),
     var(--accent);
   color: #fff;
-  padding: 56px max(24px, calc((100vw - var(--max)) / 2));
+  padding: 48px max(24px, calc((100vw - var(--max)) / 2));
 }
 
-.footer-band .band-copy {
-  display: grid;
-  align-content: center;
+@media (min-width: 700px) {
+  .footer-band {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
 }
 
-.footer-band .band-copy h2 {
+.footer-band .band-col {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.footer-band .band-col .band-heading {
+  margin: 0 0 4px;
+}
+
+.footer-band .band-col h2 {
   color: #fff;
-  font-size: clamp(22px, 3vw, 32px);
+  font-size: clamp(20px, 2.5vw, 28px);
+  margin: 0 0 4px;
 }
 
-.footer-band .band-copy .eyebrow {
+.footer-band .band-col .eyebrow {
   color: rgba(255,255,255,0.70);
+  margin: 0 0 4px;
 }
 
-.footer-band .band-copy p,
-.footer-band .band-copy address,
-.footer-band .band-copy a {
+.footer-band .band-col p,
+.footer-band .band-col address,
+.footer-band .band-col a {
   color: rgba(255,255,255,0.82);
   font-size: 14px;
   line-height: 1.6;
   margin: 0 0 4px;
 }
 
-.footer-band .band-copy a:hover {
+.footer-band .band-col a:hover {
   color: #fff;
 }
 
-.footer-band .band-copy strong {
+.footer-band .band-col .band-label {
   display: block;
-  margin: 20px 0 6px;
+  margin: 0 0 6px;
   padding-bottom: 6px;
   font-family: 'Inter', Arial, sans-serif;
   font-size: 12px;
-  font-weight: 700;
+  font-weight: 800;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: #fff;
-  border-bottom: 1px solid rgba(255,255,255,0.25);
+  border-bottom: 1px solid rgba(255,255,255,0.30);
 }
 
-.footer-band .band-copy strong:first-of-type {
-  margin-top: 0;
+.footer-band .nav-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  background: rgba(0,0,0,0.35);
+  color: #fff;
+  font-family: 'Inter', Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-radius: 6px;
+  border: 1px solid rgba(255,255,255,0.35);
+  backdrop-filter: blur(4px);
+  transition: all var(--transition);
+  width: fit-content;
 }
 
-.footer-band .map-card {
-  border-radius: 12px;
-  overflow: hidden;
-  border: 1px solid rgba(255,255,255,0.30);
-  box-shadow: 0 24px 64px rgba(0,0,0,0.28);
-  min-height: 280px;
+.footer-band .nav-btn:hover {
+  background: rgba(0,0,0,0.50);
+  border-color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.30);
 }
 
-.footer-band .map-card img {
-  width: 100%;
-  height: 100%;
-  min-height: 280px;
-  object-fit: cover;
+.footer-band .contact-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 12px;
+  margin: 0;
+}
+
+/* =============================================
+   FOOTER STRIP (karty + baner)
+   ============================================= */
+
+.footer-strip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 20px max(24px, calc((100vw - var(--max)) / 2));
+  background: #0f1210;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.footer-strip .strip-copy {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.footer-strip .strip-copy strong {
+  font-family: 'Inter', Arial, sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  display: block;
+  margin-bottom: 4px;
+}
+
+.footer-strip .strip-copy p {
+  margin: 0;
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.footer-strip .strip-copy a {
+  color: var(--muted);
+  transition: color var(--transition);
+}
+
+.footer-strip .strip-copy a:hover {
+  color: var(--text);
+}
+
+.footer-strip .strip-badges {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.footer-strip .strip-badges img {
+  height: 50px;
+  width: auto;
+  border-radius: 6px;
+  border: 1px solid rgba(255,255,255,0.10);
+  display: block;
+  background: rgba(0,0,0,0.20);
+}
+
+.footer-strip .strip-badges .strip-eu {
+  height: 40px;
 }
 
 /* =============================================
@@ -1353,9 +1449,9 @@ address a[href^="mailto:"]:hover {
 .site-footer {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   gap: 28px;
-  padding: 28px 24px;
+  padding: 20px max(24px, calc((100vw - var(--max)) / 2));
   background: #080a09;
   border-top: 1px solid var(--line);
   font-size: 13px;
@@ -1368,6 +1464,31 @@ address a[href^="mailto:"]:hover {
 
 .site-footer a:hover {
   color: var(--text);
+}
+
+.site-footer .footer-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.site-footer .footer-cards {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.site-footer .footer-cards img {
+  height: 36px;
+  width: auto;
+  border-radius: 4px;
+  border: 1px solid rgba(255,255,255,0.08);
+  display: block;
+  background: rgba(0,0,0,0.15);
+}
+
+.site-footer .footer-cards .footer-eu {
+  height: 48px;
 }
 
 /* =============================================
@@ -1490,8 +1611,26 @@ address a[href^="mailto:"]:hover {
   }
 
     .site-footer {
-      grid-template-columns: 1fr;
-      gap: 24px;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .site-footer .footer-left {
+      gap: 12px;
+    }
+
+    .site-footer .footer-cards {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+      width: 100%;
+      max-width: 320px;
+    }
+
+    .site-footer .footer-cards img {
+      height: 28px;
+      width: auto;
     }
 
     .contact-section,
