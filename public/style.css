@@ -62,6 +62,62 @@ img, svg {
   transform: none;
 }
 
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-30px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+}
+.reveal-left.visible {
+  opacity: 1;
+  transform: none;
+}
+
+.reveal-right {
+  opacity: 0;
+  transform: translateX(30px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+}
+.reveal-right.visible {
+  opacity: 1;
+  transform: none;
+}
+
+.reveal-scale {
+  opacity: 0;
+  transform: scale(0.92);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+}
+.reveal-scale.visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---- Hero entry animation ---- */
+.hero-inner > * {
+  opacity: 0;
+  transform: translateY(28px);
+  animation: heroFadeUp 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+.hero-inner h1        { animation-delay: 0s; }
+.hero-inner .hero-copy { animation-delay: 0.2s; }
+.hero-inner .hero-actions { animation-delay: 0.4s; }
+
+@keyframes heroFadeUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ---- Image fade-in (dynamicznie dodawane przez JS) ---- */
+.class-card-img img,
+.schedule-item img {
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.class-card-img img.loaded,
+.schedule-item img.loaded {
+  opacity: 1;
+}
+
 /* =============================================
    TYPOGRAPHY
    ============================================= */
@@ -1512,7 +1568,14 @@ address a[href^="mailto:"]:hover {
     justify-self: end;
   }
 
+  .site-nav {
+    overflow: hidden;
+    transition: max-height 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    max-height: 0px;
+  }
+
   .site-nav.is-open {
+    max-height: none !important;
     display: grid;
     grid-column: 1 / -1;
     justify-items: start;
@@ -1533,6 +1596,20 @@ address a[href^="mailto:"]:hover {
     font-size: 15px;
     border-top: 1px solid var(--line);
     border-radius: 0;
+    opacity: 0;
+    animation: navFadeIn 0.3s ease forwards;
+  }
+
+  .site-nav.is-open a:nth-child(1) { animation-delay: 0.05s; }
+  .site-nav.is-open a:nth-child(2) { animation-delay: 0.10s; }
+  .site-nav.is-open a:nth-child(3) { animation-delay: 0.15s; }
+  .site-nav.is-open a:nth-child(4) { animation-delay: 0.20s; }
+  .site-nav.is-open a:nth-child(5) { animation-delay: 0.25s; }
+  .site-nav.is-open a:nth-child(6) { animation-delay: 0.30s; }
+
+  @keyframes navFadeIn {
+    from { opacity: 0; transform: translateY(-6px); }
+    to   { opacity: 1; transform: translateY(0); }
   }
 
   .hero,

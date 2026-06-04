@@ -364,12 +364,28 @@
     if (!toggle || !nav) return;
 
     toggle.addEventListener("click", function () {
-      nav.classList.toggle("is-open");
+      var isOpen = nav.classList.contains("is-open");
+      if (isOpen) {
+        nav.classList.remove("is-open");
+      } else {
+        nav.style.maxHeight = "none";
+        var fullHeight = nav.scrollHeight;
+        nav.style.maxHeight = "0px";
+        // Force reflow
+        nav.offsetHeight;
+        nav.classList.add("is-open");
+        nav.style.maxHeight = fullHeight + "px";
+        nav.addEventListener("transitionend", function handler() {
+          nav.style.maxHeight = "none";
+          nav.removeEventListener("transitionend", handler);
+        });
+      }
     });
   }
 
   function initReveal() {
     if (!window.IntersectionObserver) return;
+    var classes = ['.reveal', '.reveal-left', '.reveal-right', '.reveal-scale'];
     var observer = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (entry.isIntersecting) {
@@ -379,8 +395,23 @@
       });
     }, { threshold: 0.12 });
 
-    qsa('.reveal').forEach(function (el) {
-      observer.observe(el);
+    classes.forEach(function (cls) {
+      qsa(cls).forEach(function (el) {
+        observer.observe(el);
+      });
+    });
+  }
+
+  function initImageFade() {
+    var imgs = document.querySelectorAll('.class-card-img img, .schedule-item img');
+    imgs.forEach(function (img) {
+      if (img.complete) {
+        img.classList.add('loaded');
+      } else {
+        img.addEventListener('load', function () {
+          img.classList.add('loaded');
+        });
+      }
     });
   }
 
@@ -393,6 +424,7 @@
       renderTodayClasses(items);
       initClassSlider();
       renderSchedule(items);
+      initImageFade();
     });
 
     // Nadpisywanie kafelkow: pierwsze 4 do oferty, reszta do cennika
