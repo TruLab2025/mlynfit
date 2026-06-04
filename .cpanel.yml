@@ -1,6 +1,6 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home6/atilla/public_html/lubartow.com.pl/mlynfit/
+    - export DEPLOYPATH=/home6/atilla/public_html/mlynfit/
     - mkdir -p $DEPLOYPATH
     - /bin/cp -R public/* $DEPLOYPATH
