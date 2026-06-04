@@ -1,5 +1,5 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/mlnyfit/public_html/
+    - export DEPLOYPATH=/home6/atilla/public_html/
     - /bin/cp -R public/* $DEPLOYPATH
