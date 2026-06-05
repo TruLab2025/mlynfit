@@ -210,16 +210,11 @@
       var imgHtml = tile
         ? '<div class="class-card-img"><img src="' + tile + '" alt="' + item.nazwa + '" loading="eager"></div>'
         : '';
-      var trenerHtml = item.trener ? '<p class="class-card-trainer">' + item.trener + '</p>' : '';
-      var opisHtml = item.opis ? '<p class="class-card-note">' + item.opis + '</p>' : '';
       return [
         '<article class="class-card">',
         imgHtml,
         '<div class="class-card-label">',
-        '<span class="class-card-time">' + item.godzina + '</span>',
         '<h3>' + item.nazwa + '</h3>',
-        trenerHtml,
-        opisHtml,
         '</div>',
         '</article>'
       ].join('');
