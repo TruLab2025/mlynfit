@@ -496,6 +496,10 @@ address {
   word-break: break-word;
 }
 
+.schedule-intro br.split {
+  display: none;
+}
+
 .page-hero .hero-inner p {
   font-size: 18px;
 }
@@ -1701,6 +1705,10 @@ address a[href^="mailto:"]:hover {
 
   .schedule-intro h1 {
     max-width: none;
+  }
+
+  .schedule-intro br.split {
+    display: inline;
   }
 
   .section-head {

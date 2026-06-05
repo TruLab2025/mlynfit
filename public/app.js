@@ -2,10 +2,10 @@
   var SHEETS_BASE = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQFbVVnAYRg9MTKG2kH8SxlyykZLnvW9DrN-Jrry9HXYKW2hR4Loc_1OVYGhKV7HCF7ycJTadL_DCeP/pub?output=csv";
 
   var DATA_PATHS = {
-    schedule: "data/grafik.json",
-    pricing: "data/cennik.json",
-    messages: "data/komunikaty.json",
-    site: "data/site.json",
+    schedule: "/data/grafik.json",
+    pricing: "/data/cennik.json",
+    messages: "/data/komunikaty.json",
+    site: "/data/site.json",
     scheduleCSV: SHEETS_BASE + "&gid=0",
     pricingCSV: SHEETS_BASE + "&gid=206099927",
     offerCSV: SHEETS_BASE + "&gid=834507938"
