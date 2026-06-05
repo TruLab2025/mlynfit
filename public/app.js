@@ -2,11 +2,10 @@
   var SHEETS_BASE = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQFbVVnAYRg9MTKG2kH8SxlyykZLnvW9DrN-Jrry9HXYKW2hR4Loc_1OVYGhKV7HCF7ycJTadL_DCeP/pub?output=csv";
 
   var DATA_PATHS = {
-    schedule: "/data/grafik.json",
+    scheduleCSV: SHEETS_BASE + "&gid=0",
     pricing: "/data/cennik.json",
     messages: "/data/komunikaty.json",
     site: "/data/site.json",
-    scheduleCSV: SHEETS_BASE + "&gid=0",
     pricingCSV: SHEETS_BASE + "&gid=206099927",
     offerCSV: SHEETS_BASE + "&gid=834507938"
   };
@@ -108,39 +107,144 @@
     });
   }
 
-  /* ---------- CSV parser dla terminarza (bez nagłówkow) ---------- */
-  function fetchScheduleCSV(url) {
-    var bustUrl = url + '&_t=' + Date.now();
-    var controller = new AbortController();
-    var timer = setTimeout(function () { controller.abort(); }, 5000);
-    return fetch(bustUrl, { signal: controller.signal }).then(function (response) {
-      clearTimeout(timer);
-      if (!response.ok) throw new Error("CSV error");
+  /* ---------- Schedule: localStorage + Google Sheets ---------- */
+  var _scheduleMemory = null;
+
+  function getScheduleCache() {
+    try {
+      var raw = localStorage.getItem('mlyn_schedule');
+      if (!raw) return null;
+      var p = JSON.parse(raw);
+      return p.data || null;
+    } catch (e) { return null; }
+  }
+
+  function setScheduleCache(data) {
+    try {
+      localStorage.setItem('mlyn_schedule', JSON.stringify({ ts: Date.now(), data: data }));
+    } catch (e) {}
+  }
+
+  function fetchScheduleFromSheet(callback) {
+    var ts = new Date().toISOString().slice(11, 19);
+    if (_scheduleMemory) {
+      console.log('[SCHEDULE] source=memory | records=' + _scheduleMemory.length + ' | ts=' + ts + ' | first=' + (_scheduleMemory[0] ? _scheduleMemory[0].nazwa : '?'));
+      callback(_scheduleMemory);
+      return;
+    }
+
+    var cached = getScheduleCache();
+    if (cached) {
+      var cachedTs = '';
+      try { var r = JSON.parse(localStorage.getItem('mlyn_schedule')); cachedTs = r.ts ? new Date(r.ts).toISOString().slice(11, 19) : ''; } catch(e) {}
+      console.log('[SCHEDULE] source=localStorage | records=' + cached.length + ' | ts=' + ts + ' | cachedTS=' + cachedTs + ' | first=' + (cached[0] ? cached[0].nazwa : '?'));
+      _scheduleMemory = cached;
+      callback(cached);
+    } else {
+      console.log('[SCHEDULE] source=nocache | ts=' + ts);
+    }
+
+    var bustUrl = DATA_PATHS.scheduleCSV + '&_cb=' + Date.now() + Math.random();
+    fetch(bustUrl, { cache: "no-store" }).then(function (response) {
+      if (!response.ok) throw new Error("CSV error " + response.status);
       return response.text();
     }).then(function (text) {
       if (text.charCodeAt(0) === 0xFEFF) text = text.slice(1);
       var lines = text.replace(/\r\n/g, '\n').replace(/\r/g, '\n').split('\n').filter(function (l) { return l.trim(); });
-      if (lines.length < 2) return [];
-      // Skip header row
-      lines.shift();
-      return lines.map(function (line) {
-        var vals = parseCSVLine(line);
-        return {
-          dzien: vals[0] || '',
-          godzina: vals[1] || '',
-          nazwa: vals[2] || '',
-          trener: vals[3] || '',
-          opis: vals[4] || '',
-          aktywne: (vals[5] || '').toUpperCase() !== 'FALSE'
-        };
-      }).filter(function (item) { return item.aktywne && item.dzien; });
+      if (lines.length < 2) { console.log('[SCHEDULE] CSV<2 lines, abort'); return; }
+      var headers = parseCSVLine(lines[0]);
+      var items = [];
+      for (var i = 1; i < lines.length; i++) {
+        var values = parseCSVLine(lines[i]);
+        var obj = {};
+        for (var j = 0; j < headers.length; j++) {
+          var key = headers[j].trim();
+          var val = values[j] || '';
+          if (val === 'TRUE') val = true;
+          else if (val === 'FALSE') val = false;
+          obj[key] = val;
+        }
+        if (obj.aktywne !== false && obj.dzien) items.push(obj);
+      }
+
+      var oldCache = getScheduleCache();
+      var oldStr = oldCache ? JSON.stringify(oldCache) : '';
+      var newStr = JSON.stringify(items);
+      var match = (newStr === oldStr) ? 'SAME' : 'DIFF';
+
+      console.log('[SCHEDULE] source=googleSheets | records=' + items.length + ' | ts=' + ts + ' | ' + match + ' | first=' + (items[0] ? items[0].nazwa : '?') + ' | oldLSlen=' + oldStr.length + ' newLen=' + newStr.length);
+
+      if (newStr !== oldStr) {
+        setScheduleCache(items);
+        _scheduleMemory = items;
+        callback(items);
+      }
+    }).catch(function (err) {
+      console.log('[SCHEDULE] fetch error:', err.message);
     });
   }
 
-  /* ---------- JSON od razu, CSV w tle ---------- */
-  function fetchSchedule(csvUrl, jsonUrl, onData) {
-    fetchJson(jsonUrl).then(function (p) { onData(activeItems(p)); }).catch(function () {});
-    fetchScheduleCSV(csvUrl).then(onData).catch(function () {});
+  /* ---------- Pricing: localStorage + Google Sheets ---------- */
+  var _pricingMemory = null;
+
+  function getPricingCache() {
+    try {
+      var raw = localStorage.getItem('mlyn_pricing');
+      if (!raw) return null;
+      var p = JSON.parse(raw);
+      return p.data || null;
+    } catch (e) { return null; }
+  }
+
+  function setPricingCache(data) {
+    try {
+      localStorage.setItem('mlyn_pricing', JSON.stringify({ ts: Date.now(), data: data }));
+    } catch (e) {}
+  }
+
+  function fetchPricingFromSheet(callback) {
+    if (_pricingMemory) { callback(_pricingMemory); return; }
+
+    var cached = getPricingCache();
+    if (cached) {
+      _pricingMemory = cached;
+      callback(cached);
+    }
+
+    var bustUrl = DATA_PATHS.pricingCSV + '&_cb=' + Date.now() + Math.random();
+    fetch(bustUrl, { cache: "no-store" }).then(function (response) {
+      if (!response.ok) throw new Error("Pricing CSV error " + response.status);
+      return response.text();
+    }).then(function (text) {
+      if (text.charCodeAt(0) === 0xFEFF) text = text.slice(1);
+      var lines = text.replace(/\r\n/g, '\n').replace(/\r/g, '\n').split('\n').filter(function (l) { return l.trim(); });
+      if (lines.length < 2) return;
+      var headers = parseCSVLine(lines[0]);
+      var items = [];
+      for (var i = 1; i < lines.length; i++) {
+        var values = parseCSVLine(lines[i]);
+        var obj = {};
+        for (var j = 0; j < headers.length; j++) {
+          var key = headers[j].trim();
+          var val = values[j] || '';
+          if (val === 'TRUE') val = true;
+          else if (val === 'FALSE') val = false;
+          obj[key] = val;
+        }
+        if (obj.aktywne !== false && obj.nazwa) items.push(obj);
+      }
+
+      var oldStr = _pricingMemory ? JSON.stringify(_pricingMemory) : '';
+      var newStr = JSON.stringify(items);
+
+      if (newStr !== oldStr) {
+        _pricingMemory = items;
+        setPricingCache(items);
+        callback(items);
+      }
+    }).catch(function (err) {
+      console.warn('Pricing CSV error:', err.message);
+    });
   }
 
   function groupByDay(items) {
@@ -189,27 +293,11 @@
   function renderTodayClasses(items) {
     var node = qs("[data-today-classes]");
     if (!node) return;
-
-    // Wez pierwsze 7 zajec (bez deduplikacji tile'ow)
+    if (!items.length) return;
     var classItems = items.slice(0, 7);
-
-    if (!classItems.length) {
-      classItems = [
-        { godzina: '17:00', nazwa: 'Pilates', trener: 'Kasia' },
-        { godzina: '18:00', nazwa: 'HIIT', trener: 'Ania' },
-        { godzina: '19:00', nazwa: 'Zdrowy Kręgosłup', trener: 'Kasia' },
-        { godzina: '20:00', nazwa: 'Body Pump', trener: 'Michał' },
-        { godzina: '18:00', nazwa: 'Kickboxing', opis: '7-12 lat' },
-        { godzina: '19:30', nazwa: 'Kształtowanie sylwetki + rozciąganie' },
-        { godzina: '18:00', nazwa: 'Salsation' }
-      ];
-    }
-
     node.innerHTML = classItems.map(function (item) {
       var tile = getTile(item.nazwa);
-      var imgHtml = tile
-        ? '<div class="class-card-img"><img src="' + tile + '" alt="' + item.nazwa + '" loading="eager"></div>'
-        : '';
+      var imgHtml = tile ? '<div class="class-card-img"><img src="' + tile + '" alt="' + item.nazwa + '" loading="eager"></div>' : '';
       return [
         '<article class="class-card">',
         imgHtml,
@@ -229,58 +317,45 @@
     if (!slider || !track || !prev || !next) return;
     if (classSliderReady) return;
     classSliderReady = true;
-
     var cards = qsa("[data-today-classes] .class-card");
     var cardCount = cards.length;
     if (cardCount < 2) return;
-
     var firstClone = cards[0].cloneNode(true);
     var lastClone = cards[cardCount - 1].cloneNode(true);
     firstClone.classList.add("is-clone");
     lastClone.classList.add("is-clone");
     track.insertBefore(lastClone, cards[0]);
     track.appendChild(firstClone);
-
     function step() {
       var firstCard = track.querySelector(".class-card");
       if (!firstCard) return 320;
       var gap = 14;
       return firstCard.getBoundingClientRect().width + gap;
     }
-
     function goTo(index, smooth) {
       var left = step() * index;
       track.scrollTo({ left: left, behavior: smooth ? "smooth" : "auto" });
     }
-
     var currentIndex = 1;
     var isAnimating = false;
     goTo(currentIndex, false);
-
     prev.addEventListener("click", function () {
       if (isAnimating) return;
       isAnimating = true;
       currentIndex -= 1;
       goTo(currentIndex, true);
       window.setTimeout(function () {
-        if (currentIndex === 0) {
-          currentIndex = cardCount;
-          goTo(currentIndex, false);
-        }
+        if (currentIndex === 0) { currentIndex = cardCount; goTo(currentIndex, false); }
         isAnimating = false;
       }, 350);
     });
-
     next.addEventListener("click", function () {
       if (isAnimating) return;
       isAnimating = true;
       currentIndex += 1;
       goTo(currentIndex, true);
       window.setTimeout(function () {
-        if (currentIndex === cardCount + 1) {
-          currentIndex = 1;
-          goTo(currentIndex, false);
-        }
+        if (currentIndex === cardCount + 1) { currentIndex = 1; goTo(currentIndex, false); }
         isAnimating = false;
       }, 350);
     });
@@ -289,7 +364,8 @@
   function renderSchedule(items) {
     var node = qs("[data-schedule]");
     if (!node) return;
-
+    var childrenBefore = node.children.length;
+    console.log('[RENDER] renderSchedule | records=' + items.length + ' | first=' + (items[0] ? items[0].nazwa : '?'));
     node.innerHTML = groupByDay(items).map(function (group) {
       return [
         '<section class="schedule-day">',
@@ -309,13 +385,12 @@
         '</section>'
       ].join("");
     }).join("");
+    console.log('[RENDER] renderSchedule done | before=' + childrenBefore + ' after=' + node.children.length);
   }
 
   function renderPricing(items) {
     var node = qs("[data-pricing]");
     if (!node) return;
-
-    // Srodkowy kafelek (indeks 1) podświetlony
     node.innerHTML = items.map(function (item, idx) {
       var featured = (idx === 1) ? true : false;
       var className = featured ? "price-card featured" : "price-card";
@@ -332,9 +407,7 @@
   function renderMessages(items) {
     var node = qs("[data-messages]");
     if (!node || !items.length) return;
-    node.innerHTML = items.map(function (item) {
-      return '<p>' + item.tresc + '</p>';
-    }).join("");
+    node.innerHTML = items.map(function (item) { return '<p>' + item.tresc + '</p>'; }).join("");
   }
 
   function renderContact(site) {
@@ -354,7 +427,6 @@
     var toggle = qs("[data-nav-toggle]");
     var nav = qs("[data-nav]");
     if (!toggle || !nav) return;
-
     toggle.addEventListener("click", function () {
       var isOpen = nav.classList.contains("is-open");
       if (isOpen) {
@@ -363,7 +435,6 @@
         nav.style.maxHeight = "none";
         var fullHeight = nav.scrollHeight;
         nav.style.maxHeight = "0px";
-        // Force reflow
         nav.offsetHeight;
         nav.classList.add("is-open");
         nav.style.maxHeight = fullHeight + "px";
@@ -380,29 +451,46 @@
     var classes = ['.reveal', '.reveal-left', '.reveal-right', '.reveal-scale'];
     var observer = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
+        if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); }
       });
     }, { threshold: 0.12 });
-
-    classes.forEach(function (cls) {
-      qsa(cls).forEach(function (el) {
-        observer.observe(el);
-      });
-    });
+    classes.forEach(function (cls) { qsa(cls).forEach(function (el) { observer.observe(el); }); });
   }
 
   function initImageFade() {
-    var imgs = document.querySelectorAll('.class-card-img img, .schedule-item img');
-    imgs.forEach(function (img) {
-      if (img.complete) {
-        img.classList.add('loaded');
-      } else {
-        img.addEventListener('load', function () {
-          img.classList.add('loaded');
-        });
+    document.querySelectorAll('.class-card-img img, .schedule-item img').forEach(function (img) {
+      if (img.complete) { img.classList.add('loaded'); }
+      else { img.addEventListener('load', function () { img.classList.add('loaded'); }); }
+    });
+  }
+
+  function renderPricingFromSheet(items) {
+    // Oferta: aktualizuj istniejące kafelki (pierwsze 4)
+    var offerCards = qsa(".feature-grid > article");
+    items.slice(0, 4).forEach(function (item, idx) {
+      if (offerCards[idx]) {
+        var h3 = offerCards[idx].querySelector("h3");
+        var price = offerCards[idx].querySelector(".offer-price");
+        var p = offerCards[idx].querySelector("p");
+        if (h3) h3.textContent = item.nazwa;
+        if (price) price.textContent = item.cena.replace(/(\d)zł/g, '$1 zł');
+        if (p) p.textContent = item.opis;
+      }
+    });
+
+    // Cennik: aktualizuj istniejące kafelki (reszta)
+    var pricingCards = qsa(".pricing-grid > article");
+    items.slice(4).forEach(function (item, idx) {
+      if (pricingCards[idx]) {
+        var h3 = pricingCards[idx].querySelector("h3");
+        var price = pricingCards[idx].querySelector(".price");
+        var p = pricingCards[idx].querySelector("p");
+        if (h3) h3.textContent = item.nazwa;
+        if (price) price.textContent = item.cena;
+        if (p) p.textContent = item.opis;
+        // Ustaw featured tylko dla środkowego (indeks 1)
+        if (idx === 1) pricingCards[idx].classList.add('featured');
+        else pricingCards[idx].classList.remove('featured');
       }
     });
   }
@@ -411,61 +499,26 @@
     initNav();
     initReveal();
 
-    // Schedule: JSON od razu, CSV w tle
-    fetchSchedule(DATA_PATHS.scheduleCSV, DATA_PATHS.schedule, function (items) {
-      renderTodayClasses(items);
-      initClassSlider();
-      renderSchedule(items);
-      initImageFade();
-    });
-
-    // Nadpisywanie kafelkow: pierwsze 4 do oferty, reszta do cennika
-    function applyPricing(items) {
-      // Oferta (pierwsze 4)
-      items.slice(0, 4).forEach(function (item) {
-        var cards = qsa("[data-offer-item]");
-        for (var i = 0; i < cards.length; i++) {
-          var h3 = cards[i].querySelector("h3");
-          if (h3 && h3.textContent.trim() === item.nazwa.trim()) {
-            var priceEl = cards[i].querySelector(".offer-price");
-            var pEl = cards[i].querySelector("p");
-            if (priceEl) priceEl.textContent = item.cena.replace(/(\d)zł/g, '$1 zł');
-            if (pEl) pEl.textContent = item.opis;
-            break;
-          }
-        }
-      });
-      // Cennik (reszta)
-      items.slice(4).forEach(function (item) {
-        var cards = qsa("[data-pricing-item]");
-        for (var i = 0; i < cards.length; i++) {
-          var h3 = cards[i].querySelector("h3");
-          if (h3 && h3.textContent.trim() === item.nazwa.trim()) {
-            var priceEl = cards[i].querySelector(".price");
-            var pEl = cards[i].querySelector("p");
-            if (priceEl) priceEl.textContent = item.cena;
-            if (pEl) pEl.textContent = item.opis;
-            break;
-          }
-        }
+    // Pobieraj harmonogram tylko na stronach, które go używają
+    if (qs("[data-schedule]") || qs("[data-today-classes]")) {
+      fetchScheduleFromSheet(function (items) {
+        renderTodayClasses(items);
+        initClassSlider();
+        renderSchedule(items);
+        initImageFade();
       });
     }
 
-    // Tylko CSV w tle nadpisuje statyczne kafelki
-    fetchCSV(DATA_PATHS.pricingCSV).then(applyPricing).catch(function () {});
+    // Logowanie liczby wywołań renderSchedule
+    (function() {
+      if (!window.__renderCount) window.__renderCount = 0;
+      window.__renderCount++;
+    })();
 
-    fetchJson(DATA_PATHS.messages)
-      .then(activeItems)
-      .then(renderMessages)
-      .catch(function (error) {
-        console.warn(error.message);
-      });
+    fetchPricingFromSheet(renderPricingFromSheet);
 
-    fetchJson(DATA_PATHS.site)
-      .then(renderContact)
-      .catch(function (error) {
-        console.warn(error.message);
-      });
+    fetchJson(DATA_PATHS.messages).then(activeItems).then(renderMessages).catch(function (error) { console.warn(error.message); });
+    fetchJson(DATA_PATHS.site).then(renderContact).catch(function (error) { console.warn(error.message); });
   }
 
   document.addEventListener("DOMContentLoaded", init);

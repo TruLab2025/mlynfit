@@ -493,7 +493,10 @@ address {
 .schedule-intro h1 {
   max-width: 10em;
   margin-bottom: 12px;
-  word-break: break-word;
+}
+
+.schedule-intro br.mobile-only {
+  display: none;
 }
 
 .schedule-intro br.split {
@@ -529,7 +532,7 @@ address {
 
 .quick-strip {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(6, 1fr);
   background: rgba(13,15,14,0.95);
   border-bottom: 1px solid var(--line);
 }
@@ -1049,8 +1052,8 @@ address {
   position: relative;
 }
 
-.schedule-board:empty::after {
-  content: "Ładowanie grafiku…";
+.schedule-board.is-loading::after {
+  content: "Ładowanie…";
   position: absolute;
   inset: 0;
   display: flex;
@@ -1060,6 +1063,12 @@ address {
   color: #9a9690;
   font-weight: 600;
   letter-spacing: 0.06em;
+  animation: pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
 }
 
 body[data-page="schedule"] .section {
@@ -1657,17 +1666,11 @@ address a[href^="mailto:"]:hover {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .quick-strip .info-item:nth-child(2) {
-    border-right: 0;
-  }
-
   .quick-strip .info-item:nth-child(odd) {
     border-right: 1px solid var(--line);
   }
 
-  .quick-strip .info-item:last-child {
-    grid-column: 1 / -1;
-    justify-content: center;
+  .quick-strip .info-item:nth-child(even) {
     border-right: 0;
   }
 
@@ -1707,7 +1710,7 @@ address a[href^="mailto:"]:hover {
     max-width: none;
   }
 
-  .schedule-intro br.split {
+  .schedule-intro br.mobile-only {
     display: inline;
   }
 
