@@ -190,16 +190,8 @@
     var node = qs("[data-today-classes]");
     if (!node) return;
 
-    var seenTiles = {};
-    var classItems = [];
-
-    items.forEach(function (item) {
-      if (classItems.length >= 7) return;
-      var tile = getTile(item.nazwa);
-      if (!tile || seenTiles[tile]) return;
-      seenTiles[tile] = true;
-      classItems.push(item);
-    });
+    // Wez pierwsze 7 zajec (bez deduplikacji tile'ow)
+    var classItems = items.slice(0, 7);
 
     if (!classItems.length) {
       classItems = [
@@ -216,13 +208,18 @@
     node.innerHTML = classItems.map(function (item) {
       var tile = getTile(item.nazwa);
       var imgHtml = tile
-        ? '<div class="class-card-img"><img src="' + tile + '" alt="' + item.nazwa + '" loading="lazy"></div>'
+        ? '<div class="class-card-img"><img src="' + tile + '" alt="' + item.nazwa + '" loading="eager"></div>'
         : '';
+      var trenerHtml = item.trener ? '<p class="class-card-trainer">' + item.trener + '</p>' : '';
+      var opisHtml = item.opis ? '<p class="class-card-note">' + item.opis + '</p>' : '';
       return [
         '<article class="class-card">',
         imgHtml,
         '<div class="class-card-label">',
+        '<span class="class-card-time">' + item.godzina + '</span>',
         '<h3>' + item.nazwa + '</h3>',
+        trenerHtml,
+        opisHtml,
         '</div>',
         '</article>'
       ].join('');

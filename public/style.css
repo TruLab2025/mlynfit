@@ -493,7 +493,7 @@ address {
 .schedule-intro h1 {
   max-width: 10em;
   margin-bottom: 12px;
-  white-space: nowrap;
+  word-break: break-word;
 }
 
 .page-hero .hero-inner p {
@@ -1646,7 +1646,7 @@ address a[href^="mailto:"]:hover {
   }
 
   .hero::after {
-    background: linear-gradient(180deg, rgba(11,13,12,0.80), rgba(11,13,12,0.60));
+    background: linear-gradient(180deg, rgba(11,13,12,0.50), rgba(11,13,12,0.20));
   }
 
   .quick-strip {
@@ -1686,6 +1686,11 @@ address a[href^="mailto:"]:hover {
     gap: 32px;
   }
 
+  .section {
+    padding-top: 48px;
+    padding-bottom: 48px;
+  }
+
   .media-placeholder {
     min-height: 300px;
   }
@@ -1719,10 +1724,11 @@ address a[href^="mailto:"]:hover {
 
     .site-footer .footer-cards {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 6px;
+      grid-template-columns: repeat(4, auto);
+      gap: 8px;
+      justify-content: center;
+      margin: 0 auto;
       width: 100%;
-      max-width: 320px;
     }
 
     .site-footer .footer-cards img {
