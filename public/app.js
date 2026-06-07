@@ -175,6 +175,11 @@
       console.log('[SCHEDULE] source=googleSheets | records=' + items.length + ' | ts=' + ts + ' | ' + match + ' | first=' + (items[0] ? items[0].nazwa : '?') + ' | oldLSlen=' + oldStr.length + ' newLen=' + newStr.length);
 
       if (newStr !== oldStr) {
+        // Nie nadpisuj cache pustą tablicą, jeśli mamy już dane
+        if (items.length === 0 && (cached && cached.length > 0)) {
+          console.log('[SCHEDULE] empty CSV, preserving cache');
+          return;
+        }
         setScheduleCache(items);
         _scheduleMemory = items;
         callback(items);
@@ -238,6 +243,11 @@
       var newStr = JSON.stringify(items);
 
       if (newStr !== oldStr) {
+        // Nie nadpisuj cache pustą tablicą, jeśli mamy już dane
+        if (items.length === 0 && (cached || _pricingMemory) && (cached ? cached.length > 0 : _pricingMemory.length > 0)) {
+          console.log('[PRICING] empty CSV, preserving cache');
+          return;
+        }
         _pricingMemory = items;
         setPricingCache(items);
         callback(items);
