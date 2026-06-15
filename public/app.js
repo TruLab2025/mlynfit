@@ -29,6 +29,31 @@
     return Array.prototype.slice.call(document.querySelectorAll(selector));
   }
 
+  function createEl(tagName, className, text) {
+    var el = document.createElement(tagName);
+    if (className) el.className = className;
+    if (text !== undefined && text !== null) el.textContent = text;
+    return el;
+  }
+
+  function clearNode(node) {
+    while (node.firstChild) node.removeChild(node.firstChild);
+  }
+
+  function appendLine(parent, child) {
+    parent.appendChild(child);
+    parent.appendChild(document.createElement("br"));
+  }
+
+  function phoneHref(phone) {
+    return "tel:" + String(phone || "").replace(/[^\d+]/g, "");
+  }
+
+  function mailHref(email) {
+    var value = String(email || "").trim();
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) ? "mailto:" + value : "#";
+  }
+
   function fetchJson(url) {
     return fetch(url, { cache: "no-cache" }).then(function (response) {
       if (!response.ok) {
@@ -270,104 +295,178 @@
     });
   }
 
-  var TILE_MAP = {
-    'pilates':      '/assets/pilates_tile_600x400.webp',
-    'wzmacnianie':  '/assets/pilates_tile_600x400.webp',
-    'hiit':         '/assets/hiit_tile_600x400.webp',
-    'spalanie':     '/assets/hiit_tile_600x400.webp',
-    'tabata':       '/assets/hiit_tile_600x400.webp',
-    'body pump':    '/assets/bodypump_tile_600x400.webp',
-    'figura':       '/assets/modelowanie_sylwetki_tile_600x400.webp',
-    'brzuch uda':   '/assets/modelowanie_sylwetki_tile_600x400.webp',
-    'plaski brzuch': '/assets/modelowanie_sylwetki_tile_600x400.webp',
-    'płaski brzuch': '/assets/modelowanie_sylwetki_tile_600x400.webp',
-    'kształtowanie': '/assets/modelowanie_sylwetki_tile_600x400.webp',
-    'ksztaltowanie': '/assets/modelowanie_sylwetki_tile_600x400.webp',
-    'modelowanie':  '/assets/modelowanie_sylwetki_tile_600x400.webp',
-    'kickboxing':   '/assets/kickboxing_tile_600x400.webp',
-    'kickobxing':   '/assets/kickboxing_tile_600x400.webp',
-    'kregoslup':    '/assets/kregoslup_tile_original_600x400.webp',
-    'kręgosłup':    '/assets/kregoslup_tile_original_600x400.webp',
-    'salsation':    '/assets/salsation_tile_600x400.webp',
-    'stretching':   '/assets/kregoslup_tile_original_600x400.webp'
-  };
-
-  function getTile(nazwa) {
-    var key = (nazwa || '').toLowerCase();
-    for (var k in TILE_MAP) {
-      if (key.indexOf(k) !== -1) return TILE_MAP[k];
+  var CLASS_SHOWCASE = [
+    {
+      nazwa: 'Pilates',
+      opis: 'Wzmacnia głębokie mięśnie, poprawia postawę i pomaga zadbać o kręgosłup.',
+      tile: '/assets/pilates_tile_600x400.webp'
+    },
+    {
+      nazwa: 'HIIT',
+      opis: 'Dynamiczny trening interwałowy dla osób, które lubią intensywną pracę i mocne tempo.',
+      tile: '/assets/hiit_tile_600x400.webp'
+    },
+    {
+      nazwa: 'Body Pump',
+      opis: 'Trening ze sztangą i obciążeniem, nastawiony na siłę, wytrzymałość i całe ciało.',
+      tile: '/assets/bodypump_tile_600x400.webp'
+    },
+    {
+      nazwa: 'Modelowanie sylwetki',
+      opis: 'Zajęcia łączące ćwiczenia wzmacniające, ujędrniające i elementy pracy nad mobilnością.',
+      tile: '/assets/modelowanie_sylwetki_tile_600x400.webp'
+    },
+    {
+      nazwa: 'Kickboxing',
+      opis: 'Energiczne połączenie ciosów, kopnięć i ćwiczeń kondycyjnych.',
+      tile: '/assets/kickboxing_tile_600x400.webp'
+    },
+    {
+      nazwa: 'Zdrowy kręgosłup',
+      opis: 'Spokojniejszy trening wzmacniający i rozciągający plecy oraz mięśnie stabilizujące.',
+      tile: '/assets/kregoslup_tile_original_600x400.webp'
+    },
+    {
+      nazwa: 'Salsation',
+      opis: 'Taneczne zajęcia fitness z choreografią, muzyką i dużą dawką ruchu.',
+      tile: '/assets/salsation_tile_600x400.webp'
     }
-    return null;
+  ];
+
+  function renderClassShowcase() {
+    var node = qs("[data-class-showcase]");
+    if (!node) return;
+    clearNode(node);
+    CLASS_SHOWCASE.forEach(function (item) {
+      var card = createEl("article", "class-card");
+      card.setAttribute("tabindex", "0");
+
+      var imageWrap = createEl("div", "class-card-img");
+      var img = document.createElement("img");
+      img.src = item.tile;
+      img.alt = item.nazwa;
+      img.loading = "eager";
+      imageWrap.appendChild(img);
+
+      var overlay = createEl("div", "class-card-overlay");
+      overlay.appendChild(createEl("p", "", item.opis));
+
+      var label = createEl("div", "class-card-label");
+      label.appendChild(createEl("h3", "", item.nazwa));
+
+      card.appendChild(imageWrap);
+      card.appendChild(overlay);
+      card.appendChild(label);
+      node.appendChild(card);
+    });
   }
 
-  function renderTodayClasses(items) {
-    var node = qs("[data-today-classes]");
-    if (!node) return;
-    if (!items.length) return;
-    var classItems = items.slice(0, 7);
-    node.innerHTML = classItems.map(function (item) {
-      var tile = getTile(item.nazwa);
-      var imgHtml = tile ? '<div class="class-card-img"><img src="' + tile + '" alt="' + item.nazwa + '" loading="eager"></div>' : '';
-      return [
-        '<article class="class-card">',
-        imgHtml,
-        '<div class="class-card-label">',
-        '<h3>' + item.nazwa + '</h3>',
-        '</div>',
-        '</article>'
-      ].join('');
-    }).join('');
+  function initClassTaps() {
+    qsa(".class-card").forEach(function (card) {
+      card.addEventListener("click", function (e) {
+        // Nie przełączaj gdy kliknięto w slider button
+        if (e.target.closest(".slider-btn")) return;
+        var wasTapped = card.classList.contains("is-tapped");
+        // Zamknij wszystkie inne
+        qsa(".class-card.is-tapped").forEach(function (c) {
+          c.classList.remove("is-tapped");
+        });
+        if (!wasTapped) {
+          card.classList.add("is-tapped");
+        }
+      });
+    });
+    // Zamknij po kliknięciu w tło
+    document.addEventListener("click", function (e) {
+      if (!e.target.closest(".class-card")) {
+        qsa(".class-card.is-tapped").forEach(function (c) {
+          c.classList.remove("is-tapped");
+        });
+      }
+    });
   }
 
   function initClassSlider() {
     var slider = qs("[data-class-slider]");
-    var track = qs("[data-today-classes]");
+    var track = qs("[data-class-showcase]");
     var prev = qs("[data-class-prev]");
     var next = qs("[data-class-next]");
     if (!slider || !track || !prev || !next) return;
     if (classSliderReady) return;
     classSliderReady = true;
-    var cards = qsa("[data-today-classes] .class-card");
-    var cardCount = cards.length;
-    if (cardCount < 2) return;
-    var firstClone = cards[0].cloneNode(true);
-    var lastClone = cards[cardCount - 1].cloneNode(true);
-    firstClone.classList.add("is-clone");
-    lastClone.classList.add("is-clone");
-    track.insertBefore(lastClone, cards[0]);
-    track.appendChild(firstClone);
+
+    var cards = qsa("[data-class-showcase] .class-card");
+    var total = cards.length;
+    if (total < 2) return;
+
     function step() {
       var firstCard = track.querySelector(".class-card");
       if (!firstCard) return 320;
-      var gap = 14;
+      var styles = window.getComputedStyle(track);
+      var gap = parseFloat(styles.columnGap || styles.gap) || 14;
       return firstCard.getBoundingClientRect().width + gap;
     }
+
+    function wrapIndex(index) {
+      return ((index % total) + total) % total;
+    }
+
+    var cloneCount = Math.max(1, Math.ceil(track.clientWidth / step()) + 1);
+    var before = document.createDocumentFragment();
+    var after = document.createDocumentFragment();
+
+    for (var i = 0; i < cloneCount; i += 1) {
+      var beforeCard = cards[wrapIndex(total - cloneCount + i)];
+      var beforeClone = beforeCard.cloneNode(true);
+      beforeClone.classList.add("is-clone");
+      before.appendChild(beforeClone);
+
+      var afterCard = cards[wrapIndex(i)];
+      var clone = afterCard.cloneNode(true);
+      clone.classList.add("is-clone");
+      after.appendChild(clone);
+    }
+    track.insertBefore(before, cards[0]);
+    track.appendChild(after);
+
+    var idx = cloneCount;
+    var busy = false;
+    var delay = 520;
+
     function goTo(index, smooth) {
       var left = step() * index;
-      track.scrollTo({ left: left, behavior: smooth ? "smooth" : "auto" });
+      if (smooth) {
+        track.scrollTo({ left: left, behavior: "smooth" });
+      } else {
+        track.style.scrollBehavior = "auto";
+        track.scrollLeft = left;
+        track.style.scrollBehavior = "";
+      }
     }
-    var currentIndex = 1;
-    var isAnimating = false;
-    goTo(currentIndex, false);
-    prev.addEventListener("click", function () {
-      if (isAnimating) return;
-      isAnimating = true;
-      currentIndex -= 1;
-      goTo(currentIndex, true);
+
+    goTo(idx, false);
+
+    function slide(dir) {
+      if (busy) return;
+      busy = true;
+      idx += dir;
+      goTo(idx, true);
       window.setTimeout(function () {
-        if (currentIndex === 0) { currentIndex = cardCount; goTo(currentIndex, false); }
-        isAnimating = false;
-      }, 350);
-    });
-    next.addEventListener("click", function () {
-      if (isAnimating) return;
-      isAnimating = true;
-      currentIndex += 1;
-      goTo(currentIndex, true);
-      window.setTimeout(function () {
-        if (currentIndex === cardCount + 1) { currentIndex = 1; goTo(currentIndex, false); }
-        isAnimating = false;
-      }, 350);
+        if (idx < cloneCount) {
+          idx = cloneCount + total - 1;
+          goTo(idx, false);
+        } else if (idx >= cloneCount + total) {
+          idx = cloneCount;
+          goTo(idx, false);
+        }
+        busy = false;
+      }, delay);
+    }
+
+    prev.addEventListener("click", function () { slide(-1); });
+    next.addEventListener("click", function () { slide(1); });
+    window.addEventListener("resize", function () {
+      goTo(idx, false);
     });
   }
 
@@ -376,60 +475,70 @@
     if (!node) return;
     var childrenBefore = node.children.length;
     console.log('[RENDER] renderSchedule | records=' + items.length + ' | first=' + (items[0] ? items[0].nazwa : '?'));
-    node.innerHTML = groupByDay(items).map(function (group) {
-      return [
-        '<section class="schedule-day">',
-        '<h2>' + group.day + '</h2>',
-        group.items.map(function (item) {
-          return [
-            '<article class="schedule-item">',
-            '<div class="schedule-time">' + item.godzina + '</div>',
-            '<div class="schedule-content">',
-            '<h3>' + item.nazwa + '</h3>',
-            item.opis ? '<p class="schedule-note">' + item.opis + '</p>' : '',
-            item.trener ? '<p class="schedule-trainer">' + item.trener + '</p>' : '',
-            '</div>',
-            '</article>'
-          ].join("");
-        }).join(""),
-        '</section>'
-      ].join("");
-    }).join("");
+    clearNode(node);
+    groupByDay(items).forEach(function (group) {
+      var section = createEl("section", "schedule-day");
+      section.appendChild(createEl("h2", "", group.day));
+
+      group.items.forEach(function (item) {
+        var article = createEl("article", "schedule-item");
+        article.appendChild(createEl("div", "schedule-time", item.godzina));
+
+        var content = createEl("div", "schedule-content");
+        content.appendChild(createEl("h3", "", item.nazwa));
+        if (item.opis) content.appendChild(createEl("p", "schedule-note", item.opis));
+        if (item.trener) content.appendChild(createEl("p", "schedule-trainer", item.trener));
+
+        article.appendChild(content);
+        section.appendChild(article);
+      });
+
+      node.appendChild(section);
+    });
     console.log('[RENDER] renderSchedule done | before=' + childrenBefore + ' after=' + node.children.length);
   }
 
   function renderPricing(items) {
     var node = qs("[data-pricing]");
     if (!node) return;
-    node.innerHTML = items.map(function (item, idx) {
+    clearNode(node);
+    items.forEach(function (item, idx) {
       var featured = (idx === 1) ? true : false;
       var className = featured ? "price-card featured" : "price-card";
-      return [
-        '<article class="' + className + '">',
-        '<h3>' + item.nazwa + '</h3>',
-        '<span class="price">' + item.cena + '</span>',
-        '<p>' + item.opis + '</p>',
-        '</article>'
-      ].join("");
-    }).join("");
+      var article = createEl("article", className);
+      article.appendChild(createEl("h3", "", item.nazwa));
+      article.appendChild(createEl("span", "price", item.cena));
+      article.appendChild(createEl("p", "", item.opis));
+      node.appendChild(article);
+    });
   }
 
   function renderMessages(items) {
     var node = qs("[data-messages]");
     if (!node || !items.length) return;
-    node.innerHTML = items.map(function (item) { return '<p>' + item.tresc + '</p>'; }).join("");
+    clearNode(node);
+    items.forEach(function (item) {
+      node.appendChild(createEl("p", "", item.tresc));
+    });
   }
 
   function renderContact(site) {
     qsa("[data-contact]").forEach(function (node) {
-      node.innerHTML = [
-        '<strong>' + site.nazwa + '</strong><br>',
-        site.adres.ulica + '<br>',
-        site.adres.kod + ' ' + site.adres.miasto + '<br>',
-        '<a href="tel:' + site.telefon.replace(/\s/g, "") + '">' + site.telefon + '</a><br>',
-        '<a href="mailto:' + site.email + '">' + site.email + '</a><br>',
-        '<span>' + site.godziny + '</span>'
-      ].join("");
+      var adres = site.adres || {};
+      clearNode(node);
+      appendLine(node, createEl("strong", "", site.nazwa));
+      appendLine(node, document.createTextNode(adres.ulica || ""));
+      appendLine(node, document.createTextNode(((adres.kod || "") + " " + (adres.miasto || "")).trim()));
+
+      var phone = createEl("a", "", site.telefon);
+      phone.href = phoneHref(site.telefon);
+      appendLine(node, phone);
+
+      var email = createEl("a", "", site.email);
+      email.href = mailHref(site.email);
+      appendLine(node, email);
+
+      node.appendChild(createEl("span", "", site.godziny));
     });
   }
 
@@ -509,11 +618,16 @@
     initNav();
     initReveal();
 
-    // Pobieraj harmonogram tylko na stronach, które go używają
-    if (qs("[data-schedule]") || qs("[data-today-classes]")) {
+    if (qs("[data-class-showcase]")) {
+      renderClassShowcase();
+      initClassSlider();
+      initClassTaps();
+      initImageFade();
+    }
+
+    // Pobieraj harmonogram tylko na stronach, które pokazują grafik
+    if (qs("[data-schedule]")) {
       fetchScheduleFromSheet(function (items) {
-        renderTodayClasses(items);
-        initClassSlider();
         renderSchedule(items);
         initImageFade();
       });

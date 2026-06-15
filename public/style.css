@@ -262,6 +262,18 @@ address {
    BUTTONS
    ============================================= */
 
+.site-header--no-cta {
+  grid-template-columns: auto 1fr;
+}
+
+.site-header--no-cta .site-nav {
+  justify-content: flex-end;
+}
+
+.is-hidden {
+  display: none !important;
+}
+
 .header-cta,
 .button {
   display: inline-flex;
@@ -617,7 +629,7 @@ address {
 }
 
 /* =============================================
-   CLASS CARDS (today's schedule)
+   CLASS CARDS (class showcase)
    ============================================= */
 
 .class-cards {
@@ -633,7 +645,7 @@ address {
   min-height: 200px;
 }
 
-[data-today-classes]:empty {
+[data-class-showcase]:empty {
   min-height: 200px;
 }
 
@@ -728,6 +740,54 @@ address {
   box-shadow: 0 18px 44px rgba(0, 0, 0, 0.40);
 }
 
+/* ---- Class card overlay (opis ćwiczenia) ---- */
+.class-card-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(11, 13, 12, 0.88);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.class-card:hover .class-card-overlay,
+.class-card:focus-visible .class-card-overlay {
+  opacity: 1;
+}
+
+/* Mobile: tap to toggle (JS will handle via class) */
+.class-card.is-tapped .class-card-overlay {
+  opacity: 1;
+}
+
+.class-card-overlay p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #f4ede6;
+  text-align: center;
+  font-weight: 400;
+}
+
+.class-card-overlay p::before {
+  content: '💪 ';
+  font-size: 18px;
+}
+
+/* Ensure overlay is above the gradient */
+.class-card::after {
+  z-index: 1;
+}
+.class-card-label {
+  z-index: 2;
+}
 
 .class-card-time {
   display: inline-block;
@@ -846,7 +906,7 @@ address {
 
 .feature-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 16px;
 }
 
