@@ -54,6 +54,50 @@
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) ? "mailto:" + value : "#";
   }
 
+  function styleUrl(style) {
+    var url = new URL(window.location.href);
+    if (style === "modern") {
+      url.searchParams.set("style", "modern");
+    } else {
+      url.searchParams.set("style", style);
+    }
+    return url.pathname + url.search + url.hash;
+  }
+
+  function initStyleVariant() {
+    var params = new URLSearchParams(window.location.search);
+    var style = params.get("style");
+    if (style === "retro") {
+      document.documentElement.classList.add("style-retro");
+      var link = document.createElement("link");
+      link.id = "style-variant-retro";
+      link.rel = "stylesheet";
+      link.href = "/retro.css?v=1";
+      document.head.appendChild(link);
+    }
+  }
+
+  function initStyleSwitcher() {
+    var params = new URLSearchParams(window.location.search);
+    var style = params.get("style");
+    if (!style) return;
+
+    var switcher = createEl("nav", "style-switcher");
+    switcher.setAttribute("aria-label", "Przełącz styl strony");
+
+    var label = createEl("span", "style-switcher-label", "Podgląd");
+    var modern = createEl("a", style === "retro" ? "" : "active", "Modern");
+    var retro = createEl("a", style === "retro" ? "active" : "", "Vintage");
+
+    modern.href = styleUrl("modern");
+    retro.href = styleUrl("retro");
+
+    switcher.appendChild(label);
+    switcher.appendChild(modern);
+    switcher.appendChild(retro);
+    document.body.appendChild(switcher);
+  }
+
   function fetchJson(url) {
     return fetch(url, { cache: "no-cache" }).then(function (response) {
       if (!response.ok) {
@@ -617,6 +661,7 @@
   function init() {
     initNav();
     initReveal();
+    initStyleSwitcher();
 
     if (qs("[data-class-showcase]")) {
       renderClassShowcase();
@@ -645,5 +690,6 @@
     fetchJson(DATA_PATHS.site).then(renderContact).catch(function (error) { console.warn(error.message); });
   }
 
+  initStyleVariant();
   document.addEventListener("DOMContentLoaded", init);
 })();
