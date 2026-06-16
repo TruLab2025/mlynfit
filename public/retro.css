@@ -1,0 +1,227 @@
+:root {
+  color-scheme: light;
+  --bg:          #efe3cf;
+  --panel:       #f8edd9;
+  --panel-soft:  #fff6e6;
+  --text:        #2f2418;
+  --muted:       #6f5c46;
+  --line:        rgba(58, 43, 28, 0.22);
+  --accent:      #b1462f;
+  --accent-dim:  rgba(177, 70, 47, 0.14);
+  --accent-glow: rgba(177, 70, 47, 0.22);
+  --cream:       #fff4df;
+  --ink:         #fff7e8;
+  --radius:      4px;
+}
+
+html.style-retro body {
+  background:
+    linear-gradient(rgba(55, 40, 25, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(55, 40, 25, 0.025) 1px, transparent 1px),
+    var(--bg);
+  background-size: 28px 28px;
+  color: var(--text);
+}
+
+html.style-retro body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 50% 15%, rgba(255, 246, 224, 0.22), transparent 38%),
+    repeating-linear-gradient(0deg, rgba(47, 36, 24, 0.025) 0, rgba(47, 36, 24, 0.025) 1px, transparent 1px, transparent 4px);
+  mix-blend-mode: multiply;
+}
+
+html.style-retro h1,
+html.style-retro h2,
+html.style-retro h3 {
+  font-family: 'Playfair Display', Georgia, serif;
+  letter-spacing: 0;
+}
+
+html.style-retro h1 em,
+html.style-retro .eyebrow,
+html.style-retro .back-arrow,
+html.style-retro .section-head a,
+html.style-retro address a[href^="mailto:"],
+html.style-retro .regulamin-content a[href^="mailto:"] {
+  color: var(--accent);
+}
+
+html.style-retro .site-header {
+  background: rgba(248, 237, 217, 0.92);
+  border-bottom: 2px solid #3f3326;
+  box-shadow: 0 8px 0 rgba(63, 51, 38, 0.08);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+html.style-retro .brand img {
+  filter: sepia(1) saturate(0.85) contrast(1.15);
+}
+
+html.style-retro .site-nav a {
+  color: #4e3f2f;
+  border: 1px solid transparent;
+}
+
+html.style-retro .site-nav a:hover {
+  background: #ead8bd;
+  border-color: rgba(63, 51, 38, 0.22);
+  color: #2f2418;
+}
+
+html.style-retro .nav-toggle,
+html.style-retro .button,
+html.style-retro .header-cta,
+html.style-retro .slider-btn,
+html.style-retro .nav-btn {
+  border-radius: 3px;
+  box-shadow: 4px 4px 0 rgba(63, 51, 38, 0.22);
+}
+
+html.style-retro .button.primary,
+html.style-retro .header-cta,
+html.style-retro .nav-btn {
+  background: var(--accent);
+  border-color: #7c2c1d;
+  color: #fff7e8;
+}
+
+html.style-retro .button.ghost {
+  background: rgba(255, 247, 232, 0.72);
+  border-color: rgba(63, 51, 38, 0.38);
+  color: var(--text);
+}
+
+html.style-retro .hero,
+html.style-retro .page-hero {
+  border-bottom: 2px solid #3f3326;
+}
+
+html.style-retro .hero-media img {
+  filter: sepia(0.28) saturate(0.78) contrast(1.06);
+}
+
+html.style-retro .hero::after,
+html.style-retro .page-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(239, 227, 207, 0.86) 0%, rgba(239, 227, 207, 0.58) 42%, rgba(47, 36, 24, 0.26) 100%),
+    linear-gradient(0deg, rgba(47, 36, 24, 0.28), transparent 45%);
+}
+
+html.style-retro .hero-inner {
+  position: relative;
+  z-index: 2;
+}
+
+html.style-retro .quick-strip,
+html.style-retro .section.dark,
+html.style-retro .footer-band,
+html.style-retro .site-footer {
+  background: #3b3125;
+}
+
+html.style-retro .quick-strip {
+  border-top: 2px solid #211912;
+  border-bottom: 2px solid #211912;
+}
+
+html.style-retro .info-item,
+html.style-retro .feature-grid article,
+html.style-retro .price-card,
+html.style-retro .schedule-day,
+html.style-retro .business-card,
+html.style-retro .regulamin-card {
+  background: var(--panel-soft);
+  border: 2px solid #4a3b2b;
+  border-radius: 3px;
+  box-shadow: 7px 7px 0 rgba(63, 51, 38, 0.16);
+}
+
+html.style-retro .section.dark .section-head,
+html.style-retro .section.dark h2,
+html.style-retro .section.dark .section-head a {
+  color: #fff4df;
+}
+
+html.style-retro .section.dark .eyebrow {
+  color: #e8b45d;
+}
+
+html.style-retro .class-card {
+  border: 2px solid #4a3b2b;
+  border-radius: 3px;
+  box-shadow: 7px 7px 0 rgba(0, 0, 0, 0.22);
+}
+
+html.style-retro .class-card img {
+  filter: sepia(0.25) saturate(0.78) contrast(1.08);
+}
+
+html.style-retro .class-card::after {
+  background: linear-gradient(to top, rgba(47, 36, 24, 0.88), rgba(47, 36, 24, 0.28) 58%, transparent);
+}
+
+html.style-retro .class-card-overlay {
+  background: rgba(58, 43, 28, 0.91);
+}
+
+html.style-retro .class-card-overlay p,
+html.style-retro .class-card-label h3 {
+  color: #fff4df;
+}
+
+html.style-retro .price-card.featured {
+  border-color: var(--accent);
+  box-shadow: 7px 7px 0 rgba(177, 70, 47, 0.24);
+}
+
+html.style-retro .price,
+html.style-retro .offer-price,
+html.style-retro .schedule-time {
+  color: var(--accent);
+}
+
+html.style-retro .media-placeholder,
+html.style-retro .page-image-frame {
+  border: 2px solid #4a3b2b;
+  border-radius: 3px;
+  box-shadow: 8px 8px 0 rgba(63, 51, 38, 0.18);
+}
+
+html.style-retro .media-placeholder img,
+html.style-retro .page-image-frame img {
+  filter: sepia(0.22) saturate(0.82) contrast(1.04);
+}
+
+html.style-retro .style-switcher {
+  background: #fff4df;
+  border: 2px solid #4a3b2b;
+  border-radius: 3px;
+  box-shadow: 5px 5px 0 rgba(63, 51, 38, 0.2);
+}
+
+html.style-retro .style-switcher a {
+  border-radius: 2px;
+  color: #4e3f2f;
+}
+
+html.style-retro .style-switcher a.active {
+  background: var(--accent);
+  color: #fff7e8;
+}
+
+@media (max-width: 900px) {
+  html.style-retro .site-nav.is-open {
+    background: #f8edd9;
+  }
+}
