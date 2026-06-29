@@ -6,6 +6,7 @@ MLYNfit is a boutique fitness club located in a restored historic mill building 
 
 - Home: https://mlynfit.pl/
 - Current schedule: https://mlynfit.pl/terminarz/
+- FAQ: https://mlynfit.pl/faq/
 - Offer for companies: https://mlynfit.pl/dla-firm/
 - Club rules: https://mlynfit.pl/regulamin/
 

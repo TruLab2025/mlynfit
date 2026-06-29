@@ -1742,6 +1742,7 @@ address a[href^="mailto:"]:hover {
   .site-nav.is-open a:nth-child(4) { animation-delay: 0.20s; }
   .site-nav.is-open a:nth-child(5) { animation-delay: 0.25s; }
   .site-nav.is-open a:nth-child(6) { animation-delay: 0.30s; }
+  .site-nav.is-open a:nth-child(7) { animation-delay: 0.35s; }
 
   @keyframes navFadeIn {
     from { opacity: 0; transform: translateY(-6px); }
