@@ -60,26 +60,57 @@
     return url.pathname + url.search + url.hash;
   }
 
-  function initStyleVariant() {
+  var STYLE_KEY = "mlynfit_style";
+  var STYLE_VARIANTS = {
+    modern: null,
+    retro: { className: "style-retro", href: "/retro.css?v=2" },
+    boutique: { className: "style-boutique", href: "/boutique.css?v=2" }
+  };
+
+  function isStyleVariant(style) {
+    return Object.prototype.hasOwnProperty.call(STYLE_VARIANTS, style);
+  }
+
+  function storeStyle(style) {
+    try {
+      localStorage.setItem(STYLE_KEY, style);
+    } catch (e) {}
+  }
+
+  function storedStyle() {
+    try {
+      var style = localStorage.getItem(STYLE_KEY);
+      return isStyleVariant(style) ? style : "";
+    } catch (e) {
+      return "";
+    }
+  }
+
+  function activeStyle() {
     var params = new URLSearchParams(window.location.search);
-    var style = params.get("style");
-    var variants = {
-      retro: { className: "style-retro", href: "/retro.css?v=2" },
-      boutique: { className: "style-boutique", href: "/boutique.css?v=2" }
-    };
-    if (variants[style]) {
-      document.documentElement.classList.add(variants[style].className);
+    var requested = params.get("style");
+    if (isStyleVariant(requested)) {
+      storeStyle(requested);
+      return requested;
+    }
+    return storedStyle() || "modern";
+  }
+
+  function initStyleVariant() {
+    var style = activeStyle();
+    var variant = STYLE_VARIANTS[style];
+    if (variant) {
+      document.documentElement.classList.add(variant.className);
       var link = document.createElement("link");
       link.id = "style-variant-" + style;
       link.rel = "stylesheet";
-      link.href = variants[style].href;
+      link.href = variant.href;
       document.head.appendChild(link);
     }
   }
 
   function initStyleSwitcher() {
-    var params = new URLSearchParams(window.location.search);
-    var style = params.get("style") || "modern";
+    var style = activeStyle();
 
     var switcher = createEl("nav", "style-switcher");
     switcher.setAttribute("aria-label", "Przełącz styl strony");
@@ -95,6 +126,9 @@
     styles.forEach(function (item) {
       var link = createEl("a", style === item.key ? "active" : "", item.label);
       link.href = styleUrl(item.key);
+      link.addEventListener("click", function () {
+        storeStyle(item.key);
+      });
       switcher.appendChild(link);
     });
     document.body.appendChild(switcher);
