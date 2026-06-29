@@ -1,0 +1,254 @@
+:root {
+  color-scheme: dark;
+  --bg:          #efe7db;
+  --panel:       #f7f0e6;
+  --panel-soft:  #fff9f0;
+  --text:        #251a12;
+  --muted:       #6f5c46;
+  --line:        rgba(63, 51, 38, 0.18);
+  --accent:      #d6a25e;
+  --accent-dim:  rgba(214, 162, 94, 0.12);
+  --accent-glow: rgba(214, 162, 94, 0.2);
+  --cream:       #fff7eb;
+  --ink:         #251a12;
+  --radius:      14px;
+}
+
+html.style-boutique body {
+  background:
+    radial-gradient(circle at top center, rgba(214, 162, 94, 0.14), transparent 34%),
+    linear-gradient(180deg, #f3eadf 0%, #efe6d8 46%, #f7f1e8 100%);
+  color: var(--text);
+}
+
+html.style-boutique body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 50% 18%, rgba(255, 255, 255, 0.18), transparent 36%),
+    repeating-linear-gradient(135deg, rgba(63, 51, 38, 0.015) 0, rgba(63, 51, 38, 0.015) 1px, transparent 1px, transparent 6px);
+  mix-blend-mode: multiply;
+  opacity: 0.6;
+}
+
+html.style-boutique h1,
+html.style-boutique h2,
+html.style-boutique h3 {
+  font-family: 'Playfair Display', Georgia, serif;
+  letter-spacing: 0;
+}
+
+html.style-boutique h1 {
+  font-size: clamp(46px, 6vw, 88px);
+  line-height: 0.98;
+}
+
+html.style-boutique .eyebrow,
+html.style-boutique .back-arrow,
+html.style-boutique .section-head a,
+html.style-boutique address a[href^="mailto:"],
+html.style-boutique .regulamin-content a[href^="mailto:"] {
+  color: var(--accent);
+}
+
+html.style-boutique .site-header {
+  background: rgba(247, 240, 230, 0.9);
+  border-bottom: 1px solid rgba(63, 51, 38, 0.18);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+html.style-boutique .brand img {
+  filter: sepia(0.42) saturate(0.88) brightness(0.95) contrast(1.06);
+}
+
+html.style-boutique .site-nav a {
+  color: #5f4d3b;
+}
+
+html.style-boutique .site-nav a:hover {
+  background: rgba(214, 162, 94, 0.18);
+  color: #241912;
+}
+
+html.style-boutique .button,
+html.style-boutique .header-cta,
+html.style-boutique .nav-btn,
+html.style-boutique .slider-btn,
+html.style-boutique .nav-toggle {
+  border-radius: 14px;
+}
+
+html.style-boutique .button,
+html.style-boutique .header-cta,
+html.style-boutique .nav-btn {
+  box-shadow: 0 14px 34px rgba(63, 51, 38, 0.14);
+}
+
+html.style-boutique .button.primary,
+html.style-boutique .header-cta,
+html.style-boutique .nav-btn {
+  background: linear-gradient(180deg, #e6be80, #c68f46);
+  border-color: #8a602c;
+  color: #241912;
+}
+
+html.style-boutique .button.ghost {
+  background: rgba(255, 255, 255, 0.55);
+  border-color: rgba(63, 51, 38, 0.16);
+  color: var(--text);
+}
+
+html.style-boutique .hero,
+html.style-boutique .page-hero {
+  border-bottom: 1px solid rgba(63, 51, 38, 0.16);
+}
+
+html.style-boutique .hero-media img {
+  filter: brightness(0.78) saturate(0.88) contrast(1.04);
+}
+
+html.style-boutique .hero::after,
+html.style-boutique .page-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(37, 26, 18, 0.78) 0%, rgba(37, 26, 18, 0.46) 36%, rgba(37, 26, 18, 0.12) 100%),
+    linear-gradient(0deg, rgba(37, 26, 18, 0.18), transparent 46%);
+}
+
+html.style-boutique .hero-inner {
+  position: relative;
+  z-index: 2;
+  max-width: 760px;
+  color: #fff8ee;
+}
+
+html.style-boutique .hero-copy {
+  color: #f6eddc;
+}
+
+html.style-boutique .hero-inner h1,
+html.style-boutique .hero-inner h2,
+html.style-boutique .hero-inner h3,
+html.style-boutique .hero-inner p,
+html.style-boutique .hero-inner li {
+  color: inherit;
+}
+
+html.style-boutique .hero-inner h1 em,
+html.style-boutique .hero-inner .eyebrow {
+  color: var(--accent);
+}
+
+html.style-boutique .quick-strip,
+html.style-boutique .section.dark,
+html.style-boutique .footer-band,
+html.style-boutique .site-footer {
+  background: #2b2219;
+}
+
+html.style-boutique .quick-strip {
+  border-top: 1px solid rgba(214, 162, 94, 0.18);
+  border-bottom: 1px solid rgba(214, 162, 94, 0.18);
+}
+
+html.style-boutique .info-item,
+html.style-boutique .feature-grid article,
+html.style-boutique .price-card,
+html.style-boutique .schedule-day,
+html.style-boutique .business-card,
+html.style-boutique .regulamin-card,
+html.style-boutique .message-item,
+html.style-boutique .contact-card {
+  background: var(--panel-soft);
+  border: 1px solid rgba(63, 51, 38, 0.12);
+  border-radius: 14px;
+  box-shadow: 0 18px 48px rgba(63, 51, 38, 0.08);
+}
+
+html.style-boutique .section.dark .eyebrow {
+  color: #e5c27f;
+}
+
+html.style-boutique .section.dark .section-head,
+html.style-boutique .section.dark h2,
+html.style-boutique .section.dark .section-head a,
+html.style-boutique .section.dark p,
+html.style-boutique .section.dark li,
+html.style-boutique .section.dark .muted {
+  color: #f8f0e3;
+}
+
+html.style-boutique .class-card {
+  border-radius: 16px;
+  border: 1px solid rgba(214, 162, 94, 0.22);
+  box-shadow: 0 18px 42px rgba(63, 51, 38, 0.18);
+}
+
+html.style-boutique .class-card img {
+  filter: brightness(0.86) saturate(0.88) contrast(1.02);
+}
+
+html.style-boutique .class-card::after {
+  background: linear-gradient(to top, rgba(37, 26, 18, 0.92), rgba(37, 26, 18, 0.24) 58%, transparent);
+}
+
+html.style-boutique .class-card-overlay {
+  background: rgba(37, 26, 18, 0.82);
+}
+
+html.style-boutique .class-card-label h3 {
+  color: #fff5e8;
+}
+
+html.style-boutique .price,
+html.style-boutique .offer-price,
+html.style-boutique .schedule-time {
+  color: var(--accent);
+}
+
+html.style-boutique .media-placeholder,
+html.style-boutique .page-image-frame {
+  border-radius: 16px;
+  border: 1px solid rgba(63, 51, 38, 0.12);
+  box-shadow: 0 18px 44px rgba(63, 51, 38, 0.10);
+}
+
+html.style-boutique .media-placeholder img,
+html.style-boutique .page-image-frame img,
+html.style-boutique .hero-media img {
+  border-radius: inherit;
+}
+
+html.style-boutique .style-switcher {
+  background: rgba(247, 240, 230, 0.94);
+  border: 1px solid rgba(63, 51, 38, 0.16);
+  box-shadow: 0 18px 44px rgba(63, 51, 38, 0.12);
+}
+
+html.style-boutique .style-switcher a {
+  color: #5f4d3b;
+}
+
+html.style-boutique .style-switcher a.active {
+  background: linear-gradient(180deg, #e6be80, #c68f46);
+  color: #241912;
+}
+
+html.style-boutique .footer-band,
+html.style-boutique .site-footer {
+  border-top: 1px solid rgba(214, 162, 94, 0.12);
+}
+
+@media (max-width: 900px) {
+  html.style-boutique .site-nav.is-open {
+    background: #18120d;
+  }
+}

@@ -56,23 +56,23 @@
 
   function styleUrl(style) {
     var url = new URL(window.location.href);
-    if (style === "modern") {
-      url.searchParams.set("style", "modern");
-    } else {
-      url.searchParams.set("style", style);
-    }
+    url.searchParams.set("style", style);
     return url.pathname + url.search + url.hash;
   }
 
   function initStyleVariant() {
     var params = new URLSearchParams(window.location.search);
     var style = params.get("style");
-    if (style === "retro") {
-      document.documentElement.classList.add("style-retro");
+    var variants = {
+      retro: { className: "style-retro", href: "/retro.css?v=2" },
+      boutique: { className: "style-boutique", href: "/boutique.css?v=2" }
+    };
+    if (variants[style]) {
+      document.documentElement.classList.add(variants[style].className);
       var link = document.createElement("link");
-      link.id = "style-variant-retro";
+      link.id = "style-variant-" + style;
       link.rel = "stylesheet";
-      link.href = "/retro.css?v=1";
+      link.href = variants[style].href;
       document.head.appendChild(link);
     }
   }
@@ -85,16 +85,19 @@
     var switcher = createEl("nav", "style-switcher");
     switcher.setAttribute("aria-label", "Przełącz styl strony");
 
-    var label = createEl("span", "style-switcher-label", "Podgląd");
-    var modern = createEl("a", style === "retro" ? "" : "active", "Modern");
-    var retro = createEl("a", style === "retro" ? "active" : "", "Vintage");
-
-    modern.href = styleUrl("modern");
-    retro.href = styleUrl("retro");
+    var label = createEl("span", "style-switcher-label", "Zmień motyw");
+    var styles = [
+      { key: "modern", label: "Modern" },
+      { key: "retro", label: "Vintage" },
+      { key: "boutique", label: "Boutique" }
+    ];
 
     switcher.appendChild(label);
-    switcher.appendChild(modern);
-    switcher.appendChild(retro);
+    styles.forEach(function (item) {
+      var link = createEl("a", style === item.key ? "active" : "", item.label);
+      link.href = styleUrl(item.key);
+      switcher.appendChild(link);
+    });
     document.body.appendChild(switcher);
   }
 
@@ -356,7 +359,7 @@
       tile: '/assets/bodypump_tile_600x400.webp'
     },
     {
-      nazwa: 'Modelowanie sylwetki',
+      nazwa: 'Kształtowanie sylwetki',
       opis: 'Zajęcia łączące ćwiczenia wzmacniające, ujędrniające i elementy pracy nad mobilnością.',
       tile: '/assets/modelowanie_sylwetki_tile_600x400.webp'
     },
