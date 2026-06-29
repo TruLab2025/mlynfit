@@ -383,7 +383,7 @@
     var node = qs("[data-class-showcase]");
     if (!node) return;
     clearNode(node);
-    CLASS_SHOWCASE.forEach(function (item) {
+    CLASS_SHOWCASE.forEach(function (item, idx) {
       var card = createEl("article", "class-card");
       card.setAttribute("tabindex", "0");
 
@@ -391,7 +391,8 @@
       var img = document.createElement("img");
       img.src = item.tile;
       img.alt = item.nazwa;
-      img.loading = "eager";
+      img.loading = idx < 2 ? "eager" : "lazy";
+      img.decoding = "async";
       imageWrap.appendChild(img);
 
       var overlay = createEl("div", "class-card-overlay");
@@ -680,16 +681,17 @@
       });
     }
 
-    // Logowanie liczby wywołań renderSchedule
-    (function() {
-      if (!window.__renderCount) window.__renderCount = 0;
-      window.__renderCount++;
-    })();
+    if (qs(".feature-grid") || qs(".pricing-grid")) {
+      fetchPricingFromSheet(renderPricingFromSheet);
+    }
 
-    fetchPricingFromSheet(renderPricingFromSheet);
+    if (qs("[data-messages]")) {
+      fetchJson(DATA_PATHS.messages).then(activeItems).then(renderMessages).catch(function (error) { console.warn(error.message); });
+    }
 
-    fetchJson(DATA_PATHS.messages).then(activeItems).then(renderMessages).catch(function (error) { console.warn(error.message); });
-    fetchJson(DATA_PATHS.site).then(renderContact).catch(function (error) { console.warn(error.message); });
+    if (qs("[data-contact]")) {
+      fetchJson(DATA_PATHS.site).then(renderContact).catch(function (error) { console.warn(error.message); });
+    }
   }
 
   initStyleVariant();

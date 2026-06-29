@@ -21,9 +21,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
     <link rel="canonical" href="https://mlynfit.pl/">
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="icon" type="image/svg+xml" href="/assets/mlynfit_favicon.svg">
+    <link rel="preload" as="image" href="/assets/mlynfit_bench_desktop1.webp" imagesrcset="/assets/mlynfit_bench_mobile.webp 900w, /assets/mlynfit_bench_desktop1.webp 1537w" imagesizes="100vw" fetchpriority="high">
     <link rel="stylesheet" href="/style.css?v=8">
-    <script src="/app.js?v=8" defer></script>
+    <script src="/app.js?v=9" defer></script>
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -156,7 +157,7 @@
       <section class="hero hero-home">
         <picture class="hero-media" aria-hidden="true">
           <source media="(max-width: 900px)" srcset="/assets/mlynfit_bench_mobile.webp">
-          <img src="/assets/mlynfit_bench_desktop1.webp" alt="Klub MLYNfit" loading="lazy">
+          <img src="/assets/mlynfit_bench_desktop1.webp" alt="Klub MLYNfit" fetchpriority="high" decoding="async">
         </picture>
         <div class="hero-inner">
           <h1>Trenuj w klubie fitness<br>z <em>klimatem</em></h1>
