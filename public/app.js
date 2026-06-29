@@ -64,7 +64,7 @@
   var STYLE_VARIANTS = {
     modern: null,
     retro: { className: "style-retro", href: "/retro.css?v=2" },
-    boutique: { className: "style-boutique", href: "/boutique.css?v=2" }
+    boutique: { className: "style-boutique", href: "/boutique.css?v=3" }
   };
 
   function isStyleVariant(style) {

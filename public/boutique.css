@@ -295,6 +295,12 @@ html.style-boutique .section-head.centered {
   margin-left: auto;
 }
 
+html.style-boutique body[data-page="schedule"] .schedule-intro h1 {
+  max-width: 11em;
+  font-size: clamp(44px, 7vw, 84px);
+  line-height: 0.94;
+}
+
 html.style-boutique .section.dark .eyebrow,
 html.style-boutique .section.dark .section-head a {
   color: #e8c886;
@@ -437,6 +443,28 @@ html.style-boutique .contact-card {
   box-shadow: 0 24px 70px rgba(36, 27, 22, 0.08);
 }
 
+html.style-boutique .schedule-day h2 {
+  max-width: none;
+  margin-bottom: 14px;
+  font-family: "Inter", Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #a8783a;
+}
+
+html.style-boutique .schedule-item h3,
+html.style-boutique .schedule-note {
+  font-family: "Inter", Arial, sans-serif;
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1.25;
+  letter-spacing: 0.02em;
+  color: var(--text);
+}
+
 html.style-boutique .feature-grid article {
   padding: 32px 28px;
 }
@@ -549,6 +577,10 @@ html.style-boutique .style-switcher a.active {
 
   html.style-boutique h2 {
     font-size: clamp(36px, 10vw, 56px);
+  }
+
+  html.style-boutique body[data-page="schedule"] .schedule-intro h1 {
+    font-size: clamp(38px, 11vw, 58px);
   }
 
   html.style-boutique .hero-copy {
