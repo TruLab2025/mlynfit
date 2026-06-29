@@ -79,8 +79,7 @@
 
   function initStyleSwitcher() {
     var params = new URLSearchParams(window.location.search);
-    var style = params.get("style");
-    if (!style) return;
+    var style = params.get("style") || "modern";
 
     var switcher = createEl("nav", "style-switcher");
     switcher.setAttribute("aria-label", "Przełącz styl strony");
