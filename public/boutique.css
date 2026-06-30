@@ -224,6 +224,10 @@ html.style-boutique .hero-inner .eyebrow {
   color: var(--accent);
 }
 
+html.style-boutique .hero-inner h1 {
+  font-size: clamp(52px, 8vw, 112px);
+}
+
 html.style-boutique .hero-actions {
   margin-top: 38px;
   gap: 14px;
@@ -237,9 +241,12 @@ html.style-boutique .quick-strip {
 }
 
 html.style-boutique .quick-strip .info-item {
-  display: block;
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr);
+  align-items: start;
+  column-gap: 12px;
   min-height: 0;
-  padding: 22px 20px;
+  padding: 20px 18px;
   border-right: 1px solid rgba(245, 241, 232, 0.1);
   background: transparent;
   box-shadow: none;
@@ -250,14 +257,18 @@ html.style-boutique .quick-strip .info-item:hover {
 }
 
 html.style-boutique .quick-strip .info-item img {
-  display: none;
+  width: 30px;
+  height: 30px;
+  margin-top: 2px;
+  filter: brightness(0) saturate(100%) invert(78%) sepia(39%) saturate(571%) hue-rotate(350deg) brightness(89%) contrast(86%);
+  opacity: 0.9;
 }
 
 html.style-boutique .quick-strip strong {
-  margin-bottom: 8px;
+  margin-bottom: 6px;
   color: #f5f1e8;
   font-family: "DM Serif Display", Georgia, serif;
-  font-size: clamp(24px, 2.5vw, 36px);
+  font-size: clamp(22px, 2.2vw, 32px);
   font-weight: 400;
   letter-spacing: 0;
   line-height: 0.95;
@@ -299,6 +310,21 @@ html.style-boutique body[data-page="schedule"] .schedule-intro h1 {
   max-width: 11em;
   font-size: clamp(44px, 7vw, 84px);
   line-height: 0.94;
+}
+
+html.style-boutique body[data-page="faq"] .schedule-intro h1 {
+  max-width: 12em;
+  font-size: clamp(44px, 6vw, 76px);
+  line-height: 0.96;
+}
+
+html.style-boutique body[data-page="faq"] .regulamin-section h2 {
+  max-width: none;
+  font-family: "Inter", Arial, sans-serif;
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
 }
 
 html.style-boutique .section.dark .eyebrow,
@@ -495,6 +521,15 @@ html.style-boutique .price-card {
   padding: 32px 28px;
 }
 
+html.style-boutique .price-card:not(.featured) h3,
+html.style-boutique .price-card:not(.featured) p {
+  color: #3a2a21;
+}
+
+html.style-boutique .price-card:not(.featured) .price {
+  color: #8f642d;
+}
+
 html.style-boutique .price-card.featured {
   background: #2e211b;
   border-color: rgba(214, 162, 94, 0.42);
@@ -575,12 +610,24 @@ html.style-boutique .style-switcher a.active {
     font-size: clamp(52px, 14vw, 82px);
   }
 
+  html.style-boutique .hero-inner h1 {
+    font-size: clamp(46px, 12vw, 72px);
+  }
+
   html.style-boutique h2 {
     font-size: clamp(36px, 10vw, 56px);
   }
 
   html.style-boutique body[data-page="schedule"] .schedule-intro h1 {
     font-size: clamp(38px, 11vw, 58px);
+  }
+
+  html.style-boutique body[data-page="faq"] .schedule-intro h1 {
+    font-size: clamp(38px, 10vw, 54px);
+  }
+
+  html.style-boutique body[data-page="faq"] .regulamin-section h2 {
+    font-size: 18px;
   }
 
   html.style-boutique .hero-copy {
@@ -593,7 +640,7 @@ html.style-boutique .style-switcher a.active {
 
   html.style-boutique .quick-strip .info-item {
     min-height: 0;
-    padding: 22px 20px;
+    padding: 18px 16px;
   }
 
   html.style-boutique .quick-strip .info-item:nth-child(odd) {

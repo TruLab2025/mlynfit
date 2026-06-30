@@ -60,11 +60,10 @@
     return url.pathname + url.search + url.hash;
   }
 
-  var STYLE_KEY = "mlynfit_style";
+  var STYLE_KEY = "mlynfit_style_v2";
   var STYLE_VARIANTS = {
     modern: null,
-    retro: { className: "style-retro", href: "/retro.css?v=2" },
-    boutique: { className: "style-boutique", href: "/boutique.css?v=3" }
+    boutique: { className: "style-boutique", href: "/boutique.css?v=5" }
   };
 
   function isStyleVariant(style) {
@@ -93,7 +92,7 @@
       storeStyle(requested);
       return requested;
     }
-    return storedStyle() || "modern";
+    return storedStyle() || "boutique";
   }
 
   function initStyleVariant() {
@@ -118,7 +117,6 @@
     var label = createEl("span", "style-switcher-label", "Zmień motyw");
     var styles = [
       { key: "modern", label: "Modern" },
-      { key: "retro", label: "Vintage" },
       { key: "boutique", label: "Boutique" }
     ];
 
@@ -665,9 +663,11 @@
   }
 
   function renderPricingFromSheet(items) {
-    // Oferta: aktualizuj istniejące kafelki (pierwsze 4)
-    var offerCards = qsa(".feature-grid > article");
-    items.slice(0, 4).forEach(function (item, idx) {
+    // Oferta: pierwsze 3 wiersze z arkusza aktualizują widoczne kafelki oferty.
+    var offerCards = qsa(".feature-grid > article").filter(function (card) {
+      return card.style.display !== "none";
+    });
+    items.slice(0, 3).forEach(function (item, idx) {
       if (offerCards[idx]) {
         var h3 = offerCards[idx].querySelector("h3");
         var price = offerCards[idx].querySelector(".offer-price");
@@ -678,9 +678,9 @@
       }
     });
 
-    // Cennik: aktualizuj istniejące kafelki (reszta)
+    // Cennik: kolejne 3 wiersze z arkusza aktualizują karnety OPEN.
     var pricingCards = qsa(".pricing-grid > article");
-    items.slice(4).forEach(function (item, idx) {
+    items.slice(3, 6).forEach(function (item, idx) {
       if (pricingCards[idx]) {
         var h3 = pricingCards[idx].querySelector("h3");
         var price = pricingCards[idx].querySelector(".price");
