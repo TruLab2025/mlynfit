@@ -63,7 +63,7 @@
   var STYLE_KEY = "mlynfit_style_v2";
   var STYLE_VARIANTS = {
     modern: null,
-    boutique: { className: "style-boutique", href: "/boutique.css?v=5" }
+    boutique: { className: "style-boutique", href: "/boutique.css?v=6" }
   };
 
   function isStyleVariant(style) {
@@ -472,11 +472,11 @@
     var next = qs("[data-class-next]");
     if (!slider || !track || !prev || !next) return;
     if (classSliderReady) return;
-    classSliderReady = true;
 
     var cards = qsa("[data-class-showcase] .class-card");
     var total = cards.length;
     if (total < 2) return;
+    classSliderReady = true;
 
     function step() {
       var firstCard = track.querySelector(".class-card");
@@ -625,22 +625,36 @@
     var toggle = qs("[data-nav-toggle]");
     var nav = qs("[data-nav]");
     if (!toggle || !nav) return;
+
+    function closeNav() {
+      nav.classList.remove("is-open");
+      nav.style.maxHeight = "0px";
+      toggle.setAttribute("aria-expanded", "false");
+    }
+
     toggle.addEventListener("click", function () {
       var isOpen = nav.classList.contains("is-open");
       if (isOpen) {
-        nav.classList.remove("is-open");
+        closeNav();
       } else {
         nav.style.maxHeight = "none";
         var fullHeight = nav.scrollHeight;
         nav.style.maxHeight = "0px";
         nav.offsetHeight;
         nav.classList.add("is-open");
+        toggle.setAttribute("aria-expanded", "true");
         nav.style.maxHeight = fullHeight + "px";
         nav.addEventListener("transitionend", function handler() {
           nav.style.maxHeight = "none";
           nav.removeEventListener("transitionend", handler);
         });
       }
+    });
+
+    nav.addEventListener("click", function (event) {
+      var link = event.target.closest("a");
+      if (!link || !nav.classList.contains("is-open")) return;
+      closeNav();
     });
   }
 

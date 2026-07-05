@@ -363,6 +363,10 @@ html.style-boutique .slider-btn:hover {
 html.style-boutique .class-cards {
   grid-auto-columns: minmax(290px, 38vw);
   gap: 20px;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
 }
 
 html.style-boutique .class-card {
@@ -657,12 +661,17 @@ html.style-boutique .style-switcher a.active {
   }
 
   html.style-boutique .slider-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     width: 44px;
     height: 44px;
   }
 
   html.style-boutique .class-cards {
     grid-auto-columns: minmax(230px, 78vw);
+    overflow-x: auto;
+    touch-action: pan-x pan-y;
   }
 
   html.style-boutique .split,

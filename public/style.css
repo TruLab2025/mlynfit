@@ -1,4 +1,3 @@
- 
  /* =============================================
    MLYNfit — Design System v2
    Fonts: Playfair Display (headings) + Inter (body)
@@ -262,57 +261,14 @@ address {
    BUTTONS
    ============================================= */
 
-.site-header--no-cta {
+.site-header:has(.header-cta[style*="display:none"]),
+.site-header:has(.header-cta[style*="display: none"]) {
   grid-template-columns: auto 1fr;
 }
 
-.site-header--no-cta .site-nav {
+.site-header:has(.header-cta[style*="display:none"]) .site-nav,
+.site-header:has(.header-cta[style*="display: none"]) .site-nav {
   justify-content: flex-end;
-}
-
-.is-hidden {
-  display: none !important;
-}
-
-.style-switcher {
-  position: fixed;
-  right: 18px;
-  bottom: 18px;
-  z-index: 180;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  background: rgba(11, 13, 12, 0.86);
-  box-shadow: 0 14px 38px rgba(0, 0, 0, 0.28);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-}
-
-.style-switcher-label {
-  padding: 0 8px 0 10px;
-  color: var(--muted);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.style-switcher a {
-  min-width: 70px;
-  padding: 7px 12px;
-  border-radius: 999px;
-  color: var(--muted);
-  font-size: 12px;
-  font-weight: 700;
-  text-align: center;
-}
-
-.style-switcher a.active {
-  background: var(--accent);
-  color: var(--ink);
 }
 
 .header-cta,
@@ -670,7 +626,7 @@ address {
 }
 
 /* =============================================
-   CLASS CARDS (class showcase)
+   CLASS CARDS (today's schedule)
    ============================================= */
 
 .class-cards {
@@ -686,7 +642,7 @@ address {
   min-height: 200px;
 }
 
-[data-class-showcase]:empty {
+[data-today-classes]:empty {
   min-height: 200px;
 }
 
@@ -799,7 +755,8 @@ address {
 }
 
 .class-card:hover .class-card-overlay,
-.class-card:focus-visible .class-card-overlay {
+.class-card:focus .class-card-overlay,
+.class-card:focus-within .class-card-overlay {
   opacity: 1;
 }
 
@@ -1710,10 +1667,9 @@ address a[href^="mailto:"]:hover {
 
   .site-nav.is-open {
     max-height: none !important;
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
+    display: grid;
     grid-column: 1 / -1;
+    justify-items: start;
     gap: 0;
     padding: 0;
     background: rgba(11, 13, 12, 0.97);
@@ -1729,7 +1685,6 @@ address a[href^="mailto:"]:hover {
     width: 100%;
     padding: 18px max(24px, calc((100vw - var(--max)) / 2));
     font-size: 15px;
-    text-align: center;
     border-top: 1px solid var(--line);
     border-radius: 0;
     opacity: 0;
@@ -1742,7 +1697,6 @@ address a[href^="mailto:"]:hover {
   .site-nav.is-open a:nth-child(4) { animation-delay: 0.20s; }
   .site-nav.is-open a:nth-child(5) { animation-delay: 0.25s; }
   .site-nav.is-open a:nth-child(6) { animation-delay: 0.30s; }
-  .site-nav.is-open a:nth-child(7) { animation-delay: 0.35s; }
 
   @keyframes navFadeIn {
     from { opacity: 0; transform: translateY(-6px); }
