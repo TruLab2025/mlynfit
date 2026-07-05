@@ -408,7 +408,8 @@ html.style-boutique .class-card-overlay p {
 }
 
 html.style-boutique .class-card-overlay p::before {
-  content: "";
+  content: "💪 ";
+  font-size: 18px;
 }
 
 html.style-boutique .class-card-time {
