@@ -1716,7 +1716,7 @@ address a[href^="mailto:"]:hover {
     max-height: none !important;
     display: grid;
     grid-column: 1 / -1;
-    justify-items: start;
+    justify-items: stretch;
     gap: 0;
     padding: 0;
     background: rgba(11, 13, 12, 0.97);
@@ -1732,6 +1732,7 @@ address a[href^="mailto:"]:hover {
     width: 100%;
     padding: 18px max(24px, calc((100vw - var(--max)) / 2));
     font-size: 15px;
+    text-align: center;
     border-top: 1px solid var(--line);
     border-radius: 0;
     opacity: 0;
