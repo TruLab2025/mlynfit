@@ -602,12 +602,22 @@ html.style-boutique .style-switcher a.active {
   }
 
   html.style-boutique .site-nav.is-open {
-    justify-items: stretch;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    left: 0;
+    right: 0;
+    width: 100%;
     background: rgba(35, 23, 17, 0.98);
   }
 
   html.style-boutique .site-nav.is-open a {
-    text-align: center;
+    display: flex !important;
+    align-items: center;
+    justify-content: center !important;
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+    text-align: center !important;
   }
 
   html.style-boutique .hero {

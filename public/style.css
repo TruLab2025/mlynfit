@@ -1714,9 +1714,11 @@ address a[href^="mailto:"]:hover {
 
   .site-nav.is-open {
     max-height: none !important;
-    display: grid;
+    display: flex;
+    flex-direction: column;
     grid-column: 1 / -1;
-    justify-items: stretch;
+    align-items: stretch;
+    justify-content: flex-start;
     gap: 0;
     padding: 0;
     background: rgba(11, 13, 12, 0.97);
@@ -1726,13 +1728,18 @@ address a[href^="mailto:"]:hover {
     left: 0;
     right: 0;
     width: 100%;
+    box-sizing: border-box;
   }
 
   .site-nav.is-open a {
+    display: flex !important;
+    align-items: center;
+    justify-content: center !important;
     width: 100%;
-    padding: 18px max(24px, calc((100vw - var(--max)) / 2));
+    box-sizing: border-box;
+    padding: 18px 0 !important;
     font-size: 15px;
-    text-align: center;
+    text-align: center !important;
     border-top: 1px solid var(--line);
     border-radius: 0;
     opacity: 0;
