@@ -79,10 +79,10 @@ html.style-boutique .eyebrow {
 }
 
 html.style-boutique .site-header {
-  background: linear-gradient(180deg, rgba(35, 23, 17, 0.7), rgba(35, 23, 17, 0.22));
+  background: rgba(11, 13, 12, 0.68);
   border-bottom: 1px solid rgba(245, 241, 232, 0.12);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
 }
 
 html.style-boutique .brand img {
@@ -162,6 +162,11 @@ html.style-boutique .hero {
   padding-top: 100px;
   padding-bottom: 80px;
   border-bottom: 0;
+}
+
+html.style-boutique body[data-page="home"] .hero {
+  margin-top: -64px;
+  padding-top: 164px;
 }
 
 html.style-boutique .page-hero {
@@ -625,6 +630,11 @@ html.style-boutique .style-switcher a.active {
     align-items: center;
     padding-top: 64px;
     padding-bottom: 56px;
+  }
+
+  html.style-boutique body[data-page="home"] .hero {
+    margin-top: -58px;
+    padding-top: 122px;
   }
 
   html.style-boutique h1 {

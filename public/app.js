@@ -63,7 +63,7 @@
   var STYLE_KEY = "mlynfit_style_v2";
   var STYLE_VARIANTS = {
     modern: null,
-    boutique: { className: "style-boutique", href: "/boutique.css?v=11" }
+    boutique: { className: "style-boutique", href: "/boutique.css?v=12" }
   };
 
   function isStyleVariant(style) {
@@ -712,7 +712,6 @@
   function init() {
     initNav();
     initReveal();
-    initStyleSwitcher();
 
     if (qs("[data-class-showcase]")) {
       renderClassShowcase();
