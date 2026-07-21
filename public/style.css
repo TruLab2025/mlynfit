@@ -1209,6 +1209,138 @@ body[data-page="schedule"] .section {
   text-transform: uppercase;
 }
 
+.offer-continuation-link {
+  color: var(--accent);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.offer-continuation-link:hover {
+  text-decoration-thickness: 2px;
+}
+
+.offer-footnote {
+  margin: 28px 0 0;
+  color: var(--muted);
+  font-size: 15px;
+  text-align: center;
+}
+
+.offer-footnote strong {
+  color: var(--accent);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.pricing-notes {
+  display: grid;
+  justify-items: center;
+  gap: 16px;
+  margin-top: 34px;
+}
+
+.pricing-notes .pricing-footnote {
+  margin: 0;
+}
+
+.pricing-continuation-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 18px;
+  padding: 13px 18px 13px 20px;
+  border: 1px solid rgba(242, 103, 34, 0.5);
+  border-radius: 999px;
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background var(--transition), border-color var(--transition), transform var(--transition);
+}
+
+.pricing-continuation-link:hover {
+  background: rgba(242, 103, 34, 0.12);
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.pricing-continuation-link span:last-child {
+  color: var(--accent);
+  font-size: 20px;
+  line-height: 0.8;
+}
+
+.continuation-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.continuation-card {
+  padding: 30px;
+  background: var(--panel-soft);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.continuation-card h2,
+.continuation-card h3 {
+  margin-bottom: 14px;
+}
+
+.continuation-card h2 {
+  font-size: 28px;
+}
+
+.continuation-card h3 {
+  font-family: 'Inter', Arial, sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.continuation-card p:last-child {
+  margin-bottom: 0;
+}
+
+.continuation-prices {
+  display: grid;
+  gap: 8px;
+  margin: 20px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.continuation-prices li {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--line);
+}
+
+.continuation-prices strong {
+  color: var(--accent);
+  white-space: nowrap;
+}
+
+.continuation-card--wide {
+  grid-column: 1 / -1;
+}
+
+.continuation-card--accent {
+  background: #1a1715;
+  border-color: rgba(242, 103, 34, 0.42);
+}
+
+.continuation-card--accent h2,
+.continuation-card--accent p {
+  color: var(--text);
+}
+
 .schedule-day {
   padding: 24px;
   background:
@@ -1752,6 +1884,8 @@ address a[href^="mailto:"]:hover {
   .site-nav.is-open a:nth-child(4) { animation-delay: 0.20s; }
   .site-nav.is-open a:nth-child(5) { animation-delay: 0.25s; }
   .site-nav.is-open a:nth-child(6) { animation-delay: 0.30s; }
+  .site-nav.is-open a:nth-child(7) { animation-delay: 0.35s; }
+  .site-nav.is-open a:nth-child(8) { animation-delay: 0.40s; }
 
   @keyframes navFadeIn {
     from { opacity: 0; transform: translateY(-6px); }
@@ -1797,7 +1931,8 @@ address a[href^="mailto:"]:hover {
 
   .feature-grid,
   .tips-grid,
-  .pricing-grid {
+  .pricing-grid,
+  .continuation-grid {
     grid-template-columns: 1fr;
   }
 
