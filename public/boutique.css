@@ -117,18 +117,22 @@ html.style-boutique .slider-btn {
 }
 
 html.style-boutique .button.primary,
-html.style-boutique .header-cta {
-  background: #f5f1e8;
-  border-color: #f5f1e8;
-  color: #241b16;
+html.style-boutique .header-cta,
+html.style-boutique .footer-band .nav-btn.phone-cta {
+  background: #f26722;
+  border-color: #f26722;
+  color: #fff;
   box-shadow: 0 18px 50px rgba(35, 23, 17, 0.24);
 }
 
 html.style-boutique .button.primary:hover,
-html.style-boutique .header-cta:hover {
-  background: var(--accent);
-  border-color: var(--accent);
+html.style-boutique .header-cta:hover,
+html.style-boutique .footer-band .nav-btn.phone-cta:hover {
+  background: #ffd08a;
+  border-color: #ffd08a;
   color: #241b16;
+  box-shadow: 0 14px 34px rgba(214, 162, 94, 0.44);
+  transform: translateY(-2px);
 }
 
 html.style-boutique .nav-btn {
@@ -142,6 +146,10 @@ html.style-boutique .nav-btn:hover {
   background: rgba(214, 162, 94, 0.16);
   border-color: rgba(214, 162, 94, 0.82);
   color: #f5f1e8;
+}
+
+html.style-boutique .footer-band .band-col a.nav-btn {
+  border-radius: 999px;
 }
 
 html.style-boutique .button.ghost {

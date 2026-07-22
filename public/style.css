@@ -353,6 +353,16 @@ address {
   transform: translateY(-1px);
 }
 
+.header-cta::after,
+.button.ghost::after,
+.footer-band .nav-btn::after {
+  content: "→";
+  margin-left: 2px;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1;
+}
+
 .button.ghost {
   background: transparent;
   border-color: rgba(255, 255, 255, 0.28);
@@ -1666,11 +1676,14 @@ address a[href^="mailto:"]:hover {
   border-bottom: 1px solid rgba(255,255,255,0.30);
 }
 
-.footer-band .nav-btn {
+.footer-band .band-col a.nav-btn {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 6px;
-  padding: 8px 14px;
+  min-height: 44px;
+  width: 250px;
+  padding: 0 18px;
   background: rgba(0,0,0,0.35);
   color: #fff;
   font-family: 'Inter', Arial, sans-serif;
@@ -1682,7 +1695,7 @@ address a[href^="mailto:"]:hover {
   border: 1px solid rgba(255,255,255,0.35);
   backdrop-filter: blur(4px);
   transition: all var(--transition);
-  width: fit-content;
+  white-space: nowrap;
 }
 
 .footer-band .nav-btn:hover {
@@ -1690,6 +1703,17 @@ address a[href^="mailto:"]:hover {
   border-color: #fff;
   transform: translateY(-2px);
   box-shadow: 0 8px 24px rgba(0,0,0,0.30);
+}
+
+.footer-band .nav-btn.phone-cta {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.footer-band .nav-btn.phone-cta:hover {
+  background: #ff7e36;
+  border-color: #ff7e36;
 }
 
 .footer-band .contact-row {
